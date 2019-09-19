@@ -10,9 +10,8 @@
 #include <Arduino.h>
 #include <String.h>
 #include "Defines.h" //file that contains all the constant used in the program 
-#include "Data_Types.h"
-#include "Position_control.h"
-
+#include "Data_Types.h" //some data types
+#include "Position_control.h" //to use the cpp files with the funcitons
 
 struct T_Motors Motor;
 
@@ -25,17 +24,25 @@ void Data_Initialization(){
 };
 
 void Hardware_Initialization(){
-  //pin initialization   
+
+  //pin initialization
+  
   pinMode(Z_POTENTIOMETER,INPUT);
 }
 
+//TODO: remove the while loop when used without the serial port attached
 void setup() {
     // put your setup code here, to run once:
     analogReadResolution(Z_PRECISION);
+
     Serial.begin(9600);
     Data_Initialization();
     Hardware_Initialization();
-    delay(1000);
+
+    //TODO: remove this loop when used without the serial port attached
+    while(!Serial){
+      delay(1000);
+    }
     Serial.println("Startup");
 }
 

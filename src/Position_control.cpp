@@ -12,12 +12,12 @@ struct T_Position Position;
 float checkPrecision(float current, float previous, float tollerance){
   float diff = (abs) (current - previous);
   if (diff > tollerance){
-    Serial.println("updating");
+    //Serial.println("updating");
      return current;
   }
   else
   {  
-    Serial.println("keeping");
+    //Serial.println("keeping");
     return previous;
   }
   
