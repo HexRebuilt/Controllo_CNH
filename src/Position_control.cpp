@@ -1,3 +1,10 @@
+/**
+ * file in charge of reading the position 
+ * 
+ * 
+ *  not clear if i want also to control the motors with it
+ * */
+
 #include <Arduino.h>
 #include "Defines.h"
 #include "Data_Types.h"
