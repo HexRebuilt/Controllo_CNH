@@ -8,12 +8,15 @@
 //------------------------------------------------------------------------------
 
 #include <Arduino.h>
-#include <String.h>
 #include "Defines.h" //file that contains all the constant used in the program 
 #include "Data_Types.h" //some data types
-#include "Position_control.h" //to use the cpp files with the funcitons
+#include "Position_control.h"
+#include <SPI.h> //to use the cpp files with the funcitons
+/*
 #include "Comunication.h" //used for connecting to the network
+#include <WiFi101.h>
 #include "WiFi101_Util.h"
+*/
 
 struct T_Motors Motor;
 
@@ -26,9 +29,9 @@ void Data_Initialization(){
 };
 
 void Hardware_Initialization(){
-  WiFi101_Setup();
-  //pin initialization
+  //WiFi101_Setup();
   
+  //pin initialization
   pinMode(Z_POTENTIOMETER,INPUT);
 }
 
@@ -49,7 +52,7 @@ void setup() {
 }
 
 void loop() {
-  comunicationLoop();
+  //comunicationLoop();
   // put your main code here, to run repeatedly:
   Serial.print("Z height = "); Serial.println(z_reading());
   delay(500);
