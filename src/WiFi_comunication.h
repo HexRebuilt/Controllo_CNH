@@ -3,15 +3,17 @@
 #include <WiFi101.h>
 
 #include "WiFi_info.h" //for wifi configuration
+#include "web_server.h" //for webserver
 
-
-int status = WL_IDLE_STATUS;
 char ssid[] = WiFi_SSID; 
 char pass[] = WiFi_PSW;
 int keyIndex = 0;   // your network key Index number (needed only for WEP)
+int status = WL_IDLE_STATUS;
+
 // Initialize the WiFi server library
 WiFiServer server(80);
 IPAddress ip;
+
 
 //function that prints over serial port the wireless informations
 void printWiFiStatus() {
@@ -38,7 +40,6 @@ void Setup_WiFi() {
   WiFi.setPins(8, 7, 4, 2);
   if (WiFi.status() == WL_NO_SHIELD) {
     Serial.println("WiFi shield not present");
-    Serial.println("Only Serial connection avaible");
     return;
   }
   Serial.println("WiFI shield present");
@@ -52,9 +53,27 @@ void Setup_WiFi() {
     delay(5000);
   }
   Serial.println("Connected to the network");
+  
   // Start the server
-  server.begin();
+  Setup_web();
   ip = WiFi.localIP();
   Serial.println("Server started");
+  
   printWiFiStatus();
+}
+
+/**
+ * Function tht's called at each loop. it displays the data on a webpage
+ * it returns a comand to the main that will analyze it and operate.
+ * 
+ * in input has a vector of strings constructed to be displayed by rows
+ * */
+
+//TODO analize the data string and split into smaller strings with informations
+String Loop_WiFi(String main_data){
+//si deve appoggiare ad un web server
+
+
+
+
 }
