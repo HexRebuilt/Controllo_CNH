@@ -38,7 +38,7 @@ float checkPrecision(float current, float previous, float tollerance){
 float z_reading(){
   int adc = 0;//initialize it beafore the reading
   adc = analogRead(Z_POTENTIOMETER); //pin a1
-  int steps = (int) pow(2.0,Z_PRECISION) -1; //number of steps depending by the bits ex: 8 = 1023
+  int steps = (int) pow(2.0,PRECISION) -1; //number of steps depending by the bits ex: 8 = 1023
   float current = 0;
 
   if(Z_INVERSE_LOGIC){ //look in defines.h for explanation

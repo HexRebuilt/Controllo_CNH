@@ -13,6 +13,9 @@
 #define TIMER_PRESCALER_DIV 1024
 #define INT_FREQUENCY 10
 
+
+#define PRECISION 12 //bit for the adc
+
 //analog pins 
 #define Z_POTENTIOMETER A1//15 //A1 JOYX
 
@@ -20,7 +23,6 @@
 #define Z_MAXLENGHT 200.0 //in mm
 #define Z_MINLENGHT 46.0   //in mm
 #define Z_INVERSE_LOGIC true //if the max lenght is at 0v, minimum at 3.3v
-#define Z_PRECISION 12 //bit for the adc
 #define Z_TOLLERANCE 10.0 //10mm of tollerance
 
 //analog sensors constant

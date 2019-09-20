@@ -1,11 +1,11 @@
 #include <Arduino.h>
 #include <SPI.h>
 #include <WiFi101.h>
-#include "WiFi_info.h"
+
+#include "WiFi_info.h" //for wifi configuration
 
 
 int status = WL_IDLE_STATUS;
-//edit the wifi information in the WiFi_info.h files
 char ssid[] = WiFi_SSID; 
 char pass[] = WiFi_PSW;
 int keyIndex = 0;   // your network key Index number (needed only for WEP)
@@ -32,29 +32,29 @@ void printWiFiStatus() {
  * function that defines the pins and connects to the network
  * */
 void Setup_WiFi() {
-    // check for the presence of the shield:
+  // check for the presence of the shield:
+  
+  // Configure pins for Adafruit Feather M0 ATWINC1500
+  WiFi.setPins(8, 7, 4, 2);
   if (WiFi.status() == WL_NO_SHIELD) {
     Serial.println("WiFi shield not present");
     Serial.println("Only Serial connection avaible");
     return;
   }
   Serial.println("WiFI shield present");
-  // Configure pins for Adafruit Feather M0 ATWINC1500
-  WiFi.setPins(8, 7, 4, 2);
-
-  while (WiFi.status() != WL_DISCONNECTED) {
+  
+  while (WiFi.status() !=WL_CONNECTED) {
+    // Connect to WPA/WPA2 network:
     Serial.print("Attempting to connect to SSID: ");
     Serial.println(ssid);
-    status = WiFi.begin(ssid, pass); //connection to the wifi
+    status = WiFi.begin(ssid, pass);
     // Wait 5 seconds for connection
     delay(5000);
   }
-  
+  Serial.println("Connected to the network");
   // Start the server
   server.begin();
   ip = WiFi.localIP();
   Serial.println("Server started");
   printWiFiStatus();
-  
-
 }

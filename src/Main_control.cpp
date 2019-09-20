@@ -34,13 +34,13 @@ void Hardware_Initialization(){
 //TODO: remove the while loop when used without the serial port attached
 void setup() {
     // put your setup code here, to run once:
-        //TODO: remove this loop when used without the serial port attached
+
+    //TODO: remove this loop when used without the serial port attached
     while(!Serial){
       delay(1000);
     }
-    
-    analogReadResolution(Z_PRECISION);
 
+    analogReadResolution(PRECISION);
     Serial.begin(9600);
     Data_Initialization();
     Hardware_Initialization();
