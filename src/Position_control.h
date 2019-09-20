@@ -41,7 +41,7 @@ float z_reading(){
   int steps = (int) pow(2.0,Z_PRECISION) -1; //number of steps depending by the bits ex: 8 = 1023
   float current = 0;
 
-  if(!Z_INVERSE_LOGIC){ //look in defines.h for explanation
+  if(Z_INVERSE_LOGIC){ //look in defines.h for explanation
     current = map(adc ,0 , steps , Z_MAXLENGHT,Z_MINLENGHT );
   }
   else{
