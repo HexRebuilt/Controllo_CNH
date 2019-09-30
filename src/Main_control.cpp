@@ -40,7 +40,9 @@ void Data_Initialization(){
 
 void Hardware_Initialization(){
   //pin initialization
-  pinMode(Z_POTENTIOMETER,INPUT);
+  pinMode(Z_AXIS_PIN,INPUT);
+  pinMode(ROTATION_PIN,INPUT);
+  pinMode(INCLINATION_PIN,INPUT);
   
 }
 
@@ -82,8 +84,8 @@ void loop() {
   move_platform();
   
   //to be replaced with a write_status();
-  write_Z_Height(z_reading()); //print in serial of the height
-
+  //write_Z_Height(z_reading()); //print in serial of the height
+  write_rot_degree(rot_reading());
 
   delay(500);
 }

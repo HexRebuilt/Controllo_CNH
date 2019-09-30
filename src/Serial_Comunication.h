@@ -27,7 +27,7 @@ float getDataIn(){
         }
     }
     if(!instring.equals("")){ //if i have read somwthing
-       datain = instring.toFloat();
+        datain = instring.toFloat();
         instring = "";
     }
   return datain;
@@ -48,10 +48,26 @@ void outSerial(String strout){
 String write_Z_Height(float zheight){
     String tmp = "Z height: "; 
     tmp.concat (String(zheight));
+    tmp.concat (" mm");
 
     //for now 
     outSerial(tmp);
     
     return tmp;
 }
+
+/**
+ * function that gives back an output formatted string 
+ * */
+String write_rot_degree(float rot){
+    String tmp = "Rot degree: "; 
+    tmp.concat (String(rot));
+    tmp.concat ("°");
+
+    //for now 
+    outSerial(tmp);
+    
+    return tmp;
+}
+
 

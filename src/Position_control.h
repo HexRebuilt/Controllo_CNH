@@ -12,14 +12,20 @@
 struct T_Position position;
 struct Desired_Position deisired_postition;
 
+/**
+ * I need to compensate for the sensor error while turning from 1deg to 360
+ * it has a zone into which the degrees keep decreasing providing a series of 
+ * wrong results.
+ * still with the right logic of moovement this may not be a problem
+ * */
+
 
 /**
- * one of the 3 sets of function that get a position from the analog sensors and gives back to the 
- * main the readed value
+ * one of the 3 sets of function that get a position from the analog sensors and gives back the readed value
  * */
 float z_reading(){
   int adc = 0;//initialize it beafore the reading
-  adc = analogRead(Z_PIN); //pin a1
+  adc = analogRead(Z_AXIS_PIN); //pin a1
   int steps = (int) pow(2.0,PRECISION) -1; //number of steps depending by the bits ex: 8 = 1023
   
   if(Z_INVERSE_LOGIC){ //look in defines.h for explanation
@@ -31,8 +37,26 @@ float z_reading(){
   return position.z_axis;  
 }
 
+/**
+ * one of the 3 sets of function that get a rotation from the analog sensors and gives back the readed value
+ * */
+float rot_reading(){
+  int adc = 0;//initialize it beafore the reading
+  adc = analogRead(ROTATION_PIN); //pin a1
+  int steps = (int) pow(2.0,PRECISION) -1; //number of steps depending by the bits ex: 8 = 1023
+  
+  if(ROT_INVERSE_LOGIC){ //look in defines.h for explanation
+    position.rotation = map(adc ,0 , steps , ROT_MAX,ROT_MIN );
+  }
+  else{
+    position.rotation = map(adc ,0 , steps ,ROT_MIN, ROT_MAX);
+  }
+  return position.rotation;  
+}
+
 void read_ALL(){
   z_reading();
+  rot_reading();
   //TODO adding other axis
 }
 
@@ -43,13 +67,14 @@ void read_ALL(){
 boolean need_to_move(float current, float desired, float tollerance){
   float tmp = current - desired; //getting the difference
   tmp = abs(tmp); //getting the absolute difference between the 2
+  //Serial.println(tmp);
   if (tmp > tollerance){
-    Serial.println("NEED TO MOVE");
+    //Serial.println("NEED TO MOVE");
     return true;
   }
   else
   {
-    Serial.println("NO NEED TO MOVE");
+    //Serial.println("NO NEED TO MOVE");
     return false;
   }
 }
@@ -66,7 +91,7 @@ void move_platform(){
   read_ALL();
 
   bool z = need_to_move(position.z_axis,deisired_postition.z_axis, Z_TOLLERANCE);
-  bool incline = false;
+  bool incline = need_to_move(position.rotation,deisired_postition.rotation,ROT_TOLLERANCE);
   bool rotation = false;
   int axis = 3;
   bool move[axis] = {z, incline, rotation}; //for cyclic check and movement
