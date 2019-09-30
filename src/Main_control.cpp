@@ -14,13 +14,14 @@
 #include "Defines.h"  
 #include "Data_Types.h" 
 #include "Position_control.h" 
-#include "WiFi_comunication.h"
+#include "Serial_Comunication.h"
+//#include "WiFi_comunication.h"
 
 struct T_Motors Motor;
 
 //todo using a .h file that concatenates/separates the various data
 String instruction;
-String data;
+float data[3]; 
 
 void Data_Initialization(){
   // initialization of working data
@@ -36,32 +37,48 @@ void Hardware_Initialization(){
   //pin initialization
   pinMode(Z_POTENTIOMETER,INPUT);
   
-  Setup_WiFi(); //in wifi_comunication.h
 }
 
 //TODO: remove the while loop when used without the serial port attached
 void setup() {
     // put your setup code here, to run once:
 
-    //TODO: remove this loop when used without the serial port attached
-    while(!Serial){
-      delay(1000);
-    }
 
     analogReadResolution(PRECISION);
     Serial.begin(9600);
     Data_Initialization();
     Hardware_Initialization();
 
-
-    Serial.println("Startup");
+    delay(2000);
+    
 }
+
+/**
+ * Function that manages the reception and setting of the input from serial
+ * */
+void serial_input(){
+  float datain = getDataIn();
+  if (datain >0){ //means that i have recived something
+    //TODO READDATAIN in position
+    Serial.print("DATA RECIEVED: Z desired = "); Serial.println(datain);
+  
+    //TODO ADDING THE OTHER VARIABLES
+    data[0] = datain;
+    set_Desired_Position(data);
+  }
+
+}
+
 
 void loop() {
   // put your main code here, to run repeatedly:
+
+  serial_input();
+
   
-  
-  Serial.print("Z height = "); Serial.println(z_reading());
-  
-  
+  //to be replaced with a write_status();
+  write_Z_Height(z_reading()); //print in serial of the height
+
+
+  delay(500);
 }

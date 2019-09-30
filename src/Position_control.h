@@ -10,6 +10,7 @@
 #include "Data_Types.h"
 
 struct T_Position Position;
+struct Desired_Position deisired_postition;
 
 /**
  * function that decides if updating the value or not depending by the sensor sensibility in 
@@ -29,7 +30,6 @@ float checkPrecision(float current, float previous, float tollerance){
   }
   
 }
-
 
 /**
  * one of the 3 sets of function that get a position from the analog sensors and gives back to the 
@@ -52,4 +52,20 @@ float z_reading(){
 
 
   return Position.z_axis;  
+}
+
+
+/**
+ * function that sets the input from the main for the desired input
+ * INPUT format: i from 0 to 2
+ * 0 z height 1 inclination 2 rotation  
+ * */
+
+void set_Desired_Position(float input[]){
+  //for now just the z
+  deisired_postition.z_axis = input[0];
+  //for now
+  deisired_postition.inclination = 0;
+  deisired_postition.rotation = 0;
+  Serial.println("Position setted");
 }

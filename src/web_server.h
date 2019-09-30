@@ -1,11 +1,11 @@
 #include <Arduino.h>
-#include <ESPAsyncWebServer.h>
+//#include <ESPAsyncWebServer.h>
+
 
 
 const char legalChars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890/.-_~";
 unsigned int requestNumber = 0;
 
-AsyncWebServer server(80);
 
 // HTML web page to handle 3 input fields (input1, input2, input3)
 const char index_html[] PROGMEM = R"rawliteral(

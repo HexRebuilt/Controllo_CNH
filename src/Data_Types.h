@@ -21,5 +21,10 @@ struct T_Position{
    float   rotation;
 };
 
+struct Desired_Position{
+   float   z_axis;
+   float   inclination;
+   float   rotation;
+};
 
 #endif
