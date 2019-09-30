@@ -74,7 +74,7 @@ void loop() {
   // put your main code here, to run repeatedly:
 
   serial_input();
-
+  move_platform();
   
   //to be replaced with a write_status();
   write_Z_Height(z_reading()); //print in serial of the height
