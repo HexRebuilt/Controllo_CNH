@@ -28,6 +28,11 @@ void Data_Initialization(){
   Motor.X_Power_Output = 0;
   Motor.Y_Power_Output = 0;
   Motor.Z_Power_Output = 0;
+
+ //at the startup i want the platform to be in the ground
+  deisired_postition.z_axis = Z_MINLENGHT;
+  deisired_postition.rotation = 0;
+  deisired_postition.inclination = 0; 
   
   //initialize the instruction to be empty
   instruction = "";
