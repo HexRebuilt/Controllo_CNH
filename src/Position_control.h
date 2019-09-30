@@ -8,6 +8,7 @@
 #include <Arduino.h>
 #include "Defines.h"
 #include "Data_Types.h"
+#include "Motor.h"
 
 struct T_Position position;
 struct Desired_Position deisired_postition;
@@ -100,9 +101,22 @@ void move_platform(){
   for (int i = 0; i < axis; i++)
   {
     if(move[i]){ //if true i need to move
-    Serial.println("Moving the platform");
-    //TODO ADDING MOVEMENT LOGIC
 
+      float delta; //difference from where i am and where i need to go
+      switch(i){
+        case 0: //z axis
+        delta = deisired_postition.z_axis - position.z_axis;
+        set_z_axis(delta);
+        break;
+        case 1: //inclination axis
+        delta = deisired_postition.inclination - position.inclination;
+        set_inclination(delta);
+        break;
+        case 2: //z axis
+        delta = deisired_postition.rotation - position.rotation;
+        set_rotation(delta);
+        break;
+      }
     }
   }
   

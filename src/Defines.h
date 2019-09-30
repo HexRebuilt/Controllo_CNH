@@ -5,13 +5,13 @@
  // PURPOSE      : Global simbols and constants definition
  // AUTHOR       : Simone Andreini
  //------------------------------------------------------------------------------
-#ifndef DEFINES_H
-#define DEFINES_H
-
 //cpu constant
 #define CPU_HZ 48000000
 #define TIMER_PRESCALER_DIV 1024
 #define INT_FREQUENCY 10
+
+//digital potentiometer type
+#define MPC4131
 
 
 #define PRECISION 12 //bit for the adc
@@ -37,4 +37,5 @@
 #define WIRE_POT_K 10 //10kohm potentiometer
 
 
-#endif
+
+

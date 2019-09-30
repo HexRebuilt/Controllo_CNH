@@ -84,7 +84,7 @@ void loop() {
   move_platform();
   
   //to be replaced with a write_status();
-  //write_Z_Height(z_reading()); //print in serial of the height
+  write_Z_Height(z_reading()); //print in serial of the height
   write_rot_degree(rot_reading());
 
   delay(500);
