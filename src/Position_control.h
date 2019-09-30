@@ -68,10 +68,11 @@ void move_platform(){
   bool z = need_to_move(position.z_axis,deisired_postition.z_axis, Z_TOLLERANCE);
   bool incline = false;
   bool rotation = false;
-  bool move[3] = {z, incline, rotation}; //for cyclic check and movement
+  int axis = 3;
+  bool move[axis] = {z, incline, rotation}; //for cyclic check and movement
 
   //checking if i need to move along each axis
-  for (int i = 0; i < sizeof(move); i++)
+  for (int i = 0; i < axis; i++)
   {
     if(move[i]){ //if true i need to move
     Serial.println("Moving the platform");
