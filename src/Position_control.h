@@ -152,3 +152,40 @@ void set_Desired_Position(T_Position inPosition ){
   Serial.println("Position setted");
 
 }
+
+String outPosition(){
+  String tmp = write_Z_Height(position.z_axis);
+  tmp.concat(write_inclination_degree(position.inclination));
+  tmp.concat(write_rot_degree(position.rotation));
+  return tmp;
+}
+
+/**
+ * function that gives back an output formatted string 
+ * */
+String write_Z_Height(float zheight){
+    String tmp = "Z height: "; 
+    tmp.concat (String(zheight));
+    tmp.concat (" mm");
+    return tmp;
+}
+
+/**
+ * function that gives back an output formatted string 
+ * */
+String write_rot_degree(float rot){
+    String tmp = "Rot degree: "; 
+    tmp.concat (String(rot));
+    tmp.concat ("°");
+    return tmp;
+}
+
+/**
+ * function that gives back an output formatted string 
+ * */
+String write_inclination_degree(float inclination){
+    String tmp = "Inclination degree: "; 
+    tmp.concat (String(inclination));
+    tmp.concat ("°");
+    return tmp;
+}

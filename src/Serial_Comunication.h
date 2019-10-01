@@ -71,4 +71,17 @@ String write_rot_degree(float rot){
     return tmp;
 }
 
+/**
+ * function that gives back an output formatted string 
+ * */
+String write_inclination_degree(float inclination){
+    String tmp = "Inclination degree: "; 
+    tmp.concat (String(inclination));
+    tmp.concat ("°");
+
+    //for now 
+    outSerial(tmp);
+    
+    return tmp;
+}
 
