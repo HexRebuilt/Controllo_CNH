@@ -1,14 +1,14 @@
 /**
- * file in charge of reading the position 
+ * file in charge of reading and changing the position trough motor.h 
  * 
  * 
- *  not clear if i want also to control the motors with it
  * */
 
 #include <Arduino.h>
 #include "Defines.h"
 #include "Data_Types.h"
 #include "Motor.h"
+//#include "Positions.h" //it contains the value of the various position
 
 struct T_Position position,desired_position;
 
@@ -125,15 +125,15 @@ void move_platform(){
       switch(i){
         case 0: //z axis
         delta = desired_position.z_axis - position.z_axis;
-        set_z_axis(delta);
+        move_z_axis(delta);
         break;
         case 1: //inclination axis
         delta = desired_position.inclination - position.inclination;
-        set_inclination(delta);
+        move_inclination(delta);
         break;
         case 2: //z axis
         delta = desired_position.rotation - position.rotation;
-        set_rotation(delta);
+        move_rotation(delta);
         break;
       }
     }
@@ -151,13 +151,6 @@ void set_Desired_Position(T_Position inPosition ){
   desired_position = inPosition;
   Serial.println("Position setted");
 
-}
-
-String outPosition(){
-  String tmp = write_Z_Height(position.z_axis);
-  tmp.concat(write_inclination_degree(position.inclination));
-  tmp.concat(write_rot_degree(position.rotation));
-  return tmp;
 }
 
 /**
@@ -188,4 +181,11 @@ String write_inclination_degree(float inclination){
     tmp.concat (String(inclination));
     tmp.concat ("°");
     return tmp;
+}
+
+String outPosition(){
+  String tmp = write_Z_Height(position.z_axis);
+  tmp.concat(write_inclination_degree(position.inclination));
+  tmp.concat(write_rot_degree(position.rotation));
+  return tmp;
 }

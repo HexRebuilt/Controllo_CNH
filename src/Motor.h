@@ -11,34 +11,32 @@
 #endif
 
 unsigned char step_value(float delta){
-    
-    unsigned char Out; // unsigned output value (0-128)
-	signed char Temp;  // signed temp variable
+    int data = (int) delta;
+    unsigned char out; // unsigned output value (0-128)
+	signed char temp;  // signed temp variable
     int half_step = STEPS / 2;
 	
-    // clip input data
-
-    	Temp =- ((signed char) Data);
+    temp =- ((signed char) data);
         
-	if (Temp > half_step) //means that i can only provide the maxvalue
-		Temp = half_step;
-	else if (Temp < -half_step)//means that i can only move with the minumum value
-		Temp = -half_step;
+	if (temp > half_step) //means that i can only provide the maxvalue
+		temp = half_step;
+	else if (temp < -half_step)//means that i can only move with the minumum value
+		temp = -half_step;
 	// adapt from signed to unsigned data
 	
-    Out = half_step + Temp;
+    out = half_step + temp;
 
-    return Out;
+    return out;
 }
 
-void set_z_axis(float delta){
+void move_z_axis(float delta){
     Serial.println("Moving Z");
 }
 
-void set_inclination(float delta){
+void move_inclination(float delta){
     Serial.println("Moving inclination");
 }
 
-void set_rotation(float delta){
+void move_rotation(float delta){
     Serial.println("Moving rotation");
 }

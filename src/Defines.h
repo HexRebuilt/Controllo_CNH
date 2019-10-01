@@ -13,13 +13,18 @@
 //digital potentiometer type
 #define MPC4131
 
-
-#define PRECISION 12 //bit for the adc
+//bit for the adc
+#define PRECISION 12
 
 //analog pins             //for the old board
-#define Z_AXIS_PIN           A1//JOY X
+#define Z_AXIS_PIN      A1//JOY X
 #define INCLINATION_PIN A2//JOY Y
 #define ROTATION_PIN    A3//FIRE PIN
+
+//palleto position constant
+#define Z_NO_INCLINATION 500 //mm from the ground
+#define Z_GROUND         50 //mm under those it will be prevented to inclinate or rotate 
+
 
 //Z axis constants
 #define Z_MAXLENGHT 200.0 //in mm
