@@ -15,13 +15,14 @@
 #include "Data_Types.h" 
 #include "Position_control.h" 
 #include "Serial_Comunication.h"
+#include "Positions.h"
 //#include "WiFi_comunication.h"
 
 struct T_Motors Motor;
+struct T_Position toSetPosition;
 
-//todo using a .h file that concatenates/separates the various data
-String instruction;
-float data[3]; 
+int instruction;
+
 
 void Data_Initialization(){
   // initialization of working data
@@ -30,13 +31,14 @@ void Data_Initialization(){
   Motor.Z_Power_Output = 0;
 
  //at the startup i want the platform to be in the ground
-  deisired_postition.z_axis = Z_MINLENGHT;
-  deisired_postition.rotation = 0;
-  deisired_postition.inclination = 0; 
-  
-  //initialize the instruction to be empty
-  instruction = "";
+  toSetPosition.z_axis = Z_MINLENGHT;
+  toSetPosition.rotation = ROT_MIN;
+  toSetPosition.inclination = INCLINATION_MIN; 
+
+  instruction = -1; //if -1 means that i have not recieved anything
+    
 };
+
 
 void Hardware_Initialization(){
   //pin initialization
@@ -61,17 +63,21 @@ void setup() {
 }
 
 /**
- * Function that manages the reception and setting of the input from serial
+ * Function that manages the reception and setting of the string input from serial
+ * and process it with the instrunction.h file to get a position 
  * */
 void serial_input(){
-  float datain = getDataIn();
-  if (datain >0){ //means that i have recived something
+  instruction = getDataIn();
+
+  if (! (instruction == -1) ){ //means that i have recived something
     //TODO READDATAIN in position
-    Serial.print("DATA RECIEVED: Z desired = "); Serial.println(datain);
+    Serial.print("DATA RECIEVED: position "); Serial.println(instruction);
   
+    //using the position.h to get the position
+    toSetPosition = getPosition(instruction);
+
     //TODO ADDING THE OTHER VARIABLES
-    data[0] = datain;
-    set_Desired_Position(data);
+    set_Desired_Position(toSetPosition);
   }
 
 }
@@ -86,6 +92,7 @@ void loop() {
   //to be replaced with a write_status();
   write_Z_Height(z_reading()); //print in serial of the height
   write_rot_degree(rot_reading());
+  
 
   delay(500);
 }

@@ -10,8 +10,7 @@
 #include "Data_Types.h"
 #include "Motor.h"
 
-struct T_Position position;
-struct Desired_Position deisired_postition;
+struct T_Position position,desired_position;
 
 /**
  * I need to compensate for the sensor error while turning from 1deg to 360
@@ -55,10 +54,27 @@ float rot_reading(){
   return position.rotation;  
 }
 
+/**
+ * one of the 3 sets of function that get an inclination from the analog sensors and gives back the readed value
+ * */
+float incline_reading(){
+  int adc = 0;//initialize it beafore the reading
+  adc = analogRead(INCLINATION_PIN); //pin a1
+  int steps = (int) pow(2.0,PRECISION) -1; //number of steps depending by the bits ex: 8 = 1023
+  
+  if(INCLINATION_INVERSE_LOGIC){ //look in defines.h for explanation
+    position.inclination = map(adc ,0 , steps , INCLINATION_MAX,INCLINATION_MIN );
+  }
+  else{
+    position.inclination = map(adc ,0 , steps ,INCLINATION_MIN, INCLINATION_MAX);
+  }
+  return position.inclination;  
+}
+
 void read_ALL(){
   z_reading();
   rot_reading();
-  //TODO adding other axis
+  incline_reading();
 }
 
 /**
@@ -86,14 +102,17 @@ boolean need_to_move(float current, float desired, float tollerance){
  * the platform won't move
  * 
  * it uses the desired_position in order to determine the direction of movement
+ * 
+ * 
+ * TODO ADDING THE LIMIT LOGIC TO THE MOVEMENT
  * */ 
 
 void move_platform(){
   read_ALL();
 
-  bool z = need_to_move(position.z_axis,deisired_postition.z_axis, Z_TOLLERANCE);
-  bool incline = need_to_move(position.rotation,deisired_postition.rotation,ROT_TOLLERANCE);
-  bool rotation = false;
+  bool z = need_to_move(position.z_axis,desired_position.z_axis, Z_TOLLERANCE);
+  bool incline = need_to_move(position.rotation,desired_position.rotation,ROT_TOLLERANCE);
+  bool rotation = false; //need_to_move(position.inclination,desired_position.inclination,INCLINATION_TOLLERANCE);
   int axis = 3;
   bool move[axis] = {z, incline, rotation}; //for cyclic check and movement
 
@@ -105,15 +124,15 @@ void move_platform(){
       float delta; //difference from where i am and where i need to go
       switch(i){
         case 0: //z axis
-        delta = deisired_postition.z_axis - position.z_axis;
+        delta = desired_position.z_axis - position.z_axis;
         set_z_axis(delta);
         break;
         case 1: //inclination axis
-        delta = deisired_postition.inclination - position.inclination;
+        delta = desired_position.inclination - position.inclination;
         set_inclination(delta);
         break;
         case 2: //z axis
-        delta = deisired_postition.rotation - position.rotation;
+        delta = desired_position.rotation - position.rotation;
         set_rotation(delta);
         break;
       }
@@ -128,12 +147,8 @@ void move_platform(){
  * 0 z height 1 inclination 2 rotation  
  * */
 
-void set_Desired_Position(float input[]){
-  //for now just the z
-  deisired_postition.z_axis = input[0];
-  //for now
-  deisired_postition.inclination = 0;
-  deisired_postition.rotation = 0;
+void set_Desired_Position(T_Position inPosition ){
+  desired_position = inPosition;
   Serial.println("Position setted");
 
 }

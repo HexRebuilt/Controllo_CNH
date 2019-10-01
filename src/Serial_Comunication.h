@@ -13,8 +13,8 @@
  * TODO using a binary condification for sending the messagges. for now it just works but for adding more steps it's necessary to add those
  * */
 
-float getDataIn(){
-   float datain = -1;
+int getDataIn(){
+   int value = -1;
    String instring = "";
     while (Serial.available() > 0) {
         int inChar = Serial.read();
@@ -26,11 +26,12 @@ float getDataIn(){
             instring += (char)inChar;
         }
     }
+    
     if(!instring.equals("")){ //if i have read somwthing
-        datain = instring.toFloat();
+        value = instring.toInt();
         instring = "";
     }
-  return datain;
+  return value;
 }
 
 

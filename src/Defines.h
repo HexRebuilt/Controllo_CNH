@@ -33,6 +33,12 @@
 #define ROT_INVERSE_LOGIC false //it increase tension with CW rotation
 #define ROT_TOLLERANCE 1.5 //degrees
 
+//inclination axis constant
+#define INCLINATION_MIN 0.0 //degrees
+#define INCLINATION_MAX 25.0 //degrees
+#define INCLINATION_INVERSE_LOGIC true
+#define INCLINATION_TOLLERANCE 1.5 //degrees
+
 //analog sensors constant
 #define WIRE_POT_K 10 //10kohm potentiometer
 
