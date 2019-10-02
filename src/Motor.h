@@ -10,8 +10,7 @@
 #define STEPS 128 //it has 129 steps. one is for the 0 porition
 #endif
 
-unsigned char step_value(float delta){
-    int data = (int) delta;
+unsigned char step_value(int data){
     unsigned char out; // unsigned output value (0-128)
 	signed char temp;  // signed temp variable
     int half_step = STEPS / 2;
@@ -29,14 +28,14 @@ unsigned char step_value(float delta){
     return out;
 }
 
-void move_z_axis(float delta){
+void move_z_axis(int delta){
     Serial.println("Moving Z");
 }
 
-void move_inclination(float delta){
+void move_inclination(int delta){
     Serial.println("Moving inclination");
 }
 
-void move_rotation(float delta){
+void move_rotation(int delta){
     Serial.println("Moving rotation");
 }

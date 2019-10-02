@@ -9,16 +9,16 @@
 #define DATA_TYPES_H
 
 struct T_Motors{
-  float   X_Power_Output;
-  float   Y_Power_Output;
-  float   Z_Power_Output;
+  int   X_Power_Output;
+  int   Y_Power_Output;
+  int   Z_Power_Output;
 
 };
 
 struct T_Position{
-   float   z_axis;
-   float   inclination;
-   float   rotation;
+   int   z_axis;
+   int   inclination;
+   int   rotation;
 };
 
 

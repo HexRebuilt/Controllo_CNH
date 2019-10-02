@@ -1,7 +1,6 @@
 /**
  * file in charge of reading and changing the position trough motor.h 
  * 
- * 
  * */
 
 #include <Arduino.h>
@@ -23,7 +22,7 @@ struct T_Position position,desired_position;
 /**
  * one of the 3 sets of function that get a position from the analog sensors and gives back the readed value
  * */
-float z_reading(){
+int z_reading(){
   int adc = 0;//initialize it beafore the reading
   adc = analogRead(Z_AXIS_PIN); //pin a1
   int steps = (int) pow(2.0,PRECISION) -1; //number of steps depending by the bits ex: 8 = 1023
@@ -40,7 +39,7 @@ float z_reading(){
 /**
  * one of the 3 sets of function that get a rotation from the analog sensors and gives back the readed value
  * */
-float rot_reading(){
+int rot_reading(){
   int adc = 0;//initialize it beafore the reading
   adc = analogRead(ROTATION_PIN); //pin a1
   int steps = (int) pow(2.0,PRECISION) -1; //number of steps depending by the bits ex: 8 = 1023
@@ -57,7 +56,7 @@ float rot_reading(){
 /**
  * one of the 3 sets of function that get an inclination from the analog sensors and gives back the readed value
  * */
-float incline_reading(){
+int incline_reading(){
   int adc = 0;//initialize it beafore the reading
   adc = analogRead(INCLINATION_PIN); //pin a1
   int steps = (int) pow(2.0,PRECISION) -1; //number of steps depending by the bits ex: 8 = 1023
@@ -81,8 +80,8 @@ void read_ALL(){
  * function that determine if a movement along an axis is required
  * */
 
-boolean need_to_move(float current, float desired, float tollerance){
-  float tmp = current - desired; //getting the difference
+boolean need_to_move(int current, int desired, int tollerance){
+  int tmp = current - desired; //getting the difference
   tmp = abs(tmp); //getting the absolute difference between the 2
   //Serial.println(tmp);
   if (tmp > tollerance){
@@ -121,7 +120,7 @@ void move_platform(){
   {
     if(move[i]){ //if true i need to move
 
-      float delta; //difference from where i am and where i need to go
+      int delta; //difference from where i am and where i need to go
       switch(i){
         case 0: //z axis
         delta = desired_position.z_axis - position.z_axis;
@@ -153,10 +152,14 @@ void set_Desired_Position(T_Position inPosition ){
 
 }
 
+
+//TODO move to a class position
+
+
 /**
  * function that gives back an output formatted string 
  * */
-String write_Z_Height(float zheight){
+String write_Z_Height(int zheight){
     String tmp = "Z height: "; 
     tmp.concat (String(zheight));
     tmp.concat (" mm");
@@ -166,7 +169,7 @@ String write_Z_Height(float zheight){
 /**
  * function that gives back an output formatted string 
  * */
-String write_rot_degree(float rot){
+String write_rot_degree(int rot){
     String tmp = "Rot degree: "; 
     tmp.concat (String(rot));
     tmp.concat ("°");
@@ -176,7 +179,7 @@ String write_rot_degree(float rot){
 /**
  * function that gives back an output formatted string 
  * */
-String write_inclination_degree(float inclination){
+String write_inclination_degree(int inclination){
     String tmp = "Inclination degree: "; 
     tmp.concat (String(inclination));
     tmp.concat ("°");
