@@ -10,7 +10,83 @@
 /**
  * a series of position that are going to be used during the process
  * */
+class Position {
+    private:
+        int z_axis;
+        int inclination;
+        int rotation;
+    
+        /**
+         * function that gives back an output formatted string 
+         * */
+        String write_Z_Height(){
+            String tmp = "Z height: "; 
+            tmp.concat (String(z_axis));
+            tmp.concat (" mm");
+            return tmp;
+        }
 
+        /**
+         * function that gives back an output formatted string 
+         * */
+        String write_rot_degree(){
+            String tmp = "Rot degree: "; 
+            tmp.concat (String(inclination));
+            tmp.concat ("°");
+            return tmp;
+        }
+        
+        /**
+         * function that gives back an output formatted string 
+         * */
+        String write_inclination_degree(){
+            String tmp = "Inclination degree: "; 
+            tmp.concat (String(inclination));
+            tmp.concat ("°");
+            return tmp;
+        }
+    
+    public:
+
+        int getZ(){
+            return z_axis;
+        }
+
+        int getInlcination(){
+            return inclination;
+        }
+
+        int getRotation(){
+            return rotation;
+        }
+
+        void setZ(int newZ){
+            z_axis = newZ;
+        }
+
+        void setInclination(int newInclination){
+            inclination = newInclination;
+        }
+
+        void setRotation(int newRotation){
+            rotation = newRotation;
+        }
+
+        /**
+         * function that gives back an output formatted string
+         * */
+        String toStringPosition(){
+            String tmp = write_Z_Height();
+            tmp.concat(write_inclination_degree());
+            tmp.concat(write_rot_degree());
+            return tmp;
+        }
+
+};
+
+
+
+//TODO removing this shit
 struct T_Position p0 = {Z_MINLENGHT, INCLINATION_MIN, ROT_MIN}; //level 0
 struct T_Position p1 = {150,INCLINATION_MIN, 180}; //level 1 for installing blocs
 struct T_Position p2 = {500,INCLINATION_MIN,ROT_MIN};
@@ -22,7 +98,7 @@ int dimension = sizeof(pALL) / sizeof(pALL[0]);
 
 
 
-T_Position getPosition(int comand){
+T_Position getcomandPosition(int comand){
     if (comand <= dimension){
         return pALL[comand];
     }

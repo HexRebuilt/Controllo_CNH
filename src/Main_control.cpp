@@ -18,17 +18,26 @@
 #include "Positions.h"
 //#include "WiFi_comunication.h"
 
+//TODO the motor output must be controllerd by position contorl
 struct T_Motors Motor;
+//TODO move it to a setter in position_control that will include the class position
 struct T_Position toSetPosition;
+
+Position newPosition;
 
 int instruction;
 
 
+
+
+
+
 void Data_Initialization(){
   // initialization of working data
-  Motor.X_Power_Output = 0;
-  Motor.Y_Power_Output = 0;
-  Motor.Z_Power_Output = 0;
+  
+  newPosition.setZ(Z_MINLENGHT);
+  newPosition.setInclination(INCLINATION_MIN);
+  newPosition.setRotation(ROT_MIN);
 
  //at the startup i want the platform to be in the ground
   toSetPosition.z_axis = Z_MINLENGHT;
@@ -74,9 +83,9 @@ void serial_input(){
     Serial.print("DATA RECIEVED: position "); Serial.println(instruction);
   
     //using the position.h to get the position
-    toSetPosition = getPosition(instruction);
+    toSetPosition = getcomandPosition(instruction);
 
-    //TODO ADDING THE OTHER VARIABLES
+    //TODO modifying to send the control position a position and not a struct variable
     set_Desired_Position(toSetPosition);
   }
 

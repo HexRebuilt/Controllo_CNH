@@ -10,6 +10,10 @@
 #define STEPS 128 //it has 129 steps. one is for the 0 porition
 #endif
 
+/**
+ * function that, given an input difference in position gives back a step value
+ * to set the stepper
+ * */
 unsigned char step_value(int data){
     unsigned char out; // unsigned output value (0-128)
 	signed char temp;  // signed temp variable
