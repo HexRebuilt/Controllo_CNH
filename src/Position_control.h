@@ -7,9 +7,90 @@
 #include "Defines.h"
 #include "Data_Types.h"
 #include "Motor.h"
-//#include "Positions.h" //it contains the value of the various position
+#include "Positions.h" //it contains the value of the various position
+class PositionControl {
+  public:
+    String toStringCurrentPosition(){
+      return current.toStringPosition();
+    }
 
-struct T_Position position,desired_position;
+    void setDesiredPosition(Position dataIn){
+      desired.setZ(dataIn.getZ());
+      desired.setInclination(dataIn.getInlcination());
+      desired.setRotation(dataIn.getRotation());
+    }
+
+  private:
+    Position current, desired;
+    int adc = 0;//initialize it beafore the reading and it's shared between the reading function
+    int steps = (int) pow(2.0,PRECISION) -1; //number of steps depending by the bits ex: 8 = 1023 it's the same for all
+    int readvalue= 0;
+
+    /**
+     * one of the 3 sets of function that get a position from the analog sensors and gives back the readed value
+     * */
+    int z_reading(){
+      adc = analogRead(Z_AXIS_PIN);
+
+      if(Z_INVERSE_LOGIC){ //look in defines.h for explanation
+        readvalue = map(adc ,0 , steps , Z_MAXLENGHT,Z_MINLENGHT );
+      }
+      else{
+        readvalue = map(adc ,0 , steps ,Z_MINLENGHT, Z_MAXLENGHT);
+      }
+      current.setZ(readvalue);
+
+      return current.getZ();  
+    }
+
+    /**
+     * one of the 3 sets of function that get a rotation from the analog sensors and gives back the readed value
+     * */
+    int rot_reading(){
+      adc = analogRead(ROTATION_PIN);
+
+      if(ROT_INVERSE_LOGIC){ //look in defines.h for explanation
+        readvalue = map(adc ,0 , steps , ROT_MAX,ROT_MIN );
+      }
+      else{
+        readvalue = map(adc ,0 , steps ,ROT_MIN, ROT_MAX);
+      }
+      current.setRotation(readvalue);
+      return current.getRotation();  
+    }
+
+    /**
+     * one of the 3 sets of function that get an inclination from the analog sensors and gives back the readed value
+     * */
+    int incline_reading(){
+      adc = analogRead(INCLINATION_PIN); //pin a1
+      
+      if(INCLINATION_INVERSE_LOGIC){ //look in defines.h for explanation
+        readvalue = map(adc ,0 , steps , INCLINATION_MAX,INCLINATION_MIN );
+      }
+      else{
+        readvalue = map(adc ,0 , steps ,INCLINATION_MIN, INCLINATION_MAX);
+      }
+      current.setInclination(readvalue);
+
+      return current.getInlcination();  
+    }
+
+    void read_ALL(){
+      z_reading();
+      rot_reading();
+      incline_reading();
+    }
+
+
+
+
+};
+
+
+
+Struct T_Position position,desired_position;
+
 
 /**
  * I need to compensate for the sensor error while turning from 1deg to 360
@@ -24,7 +105,7 @@ struct T_Position position,desired_position;
  * */
 int z_reading(){
   int adc = 0;//initialize it beafore the reading
-  adc = analogRead(Z_AXIS_PIN); //pin a1
+  adc = analogRead(ROTATION_PIN); //pin a1
   int steps = (int) pow(2.0,PRECISION) -1; //number of steps depending by the bits ex: 8 = 1023
   
   if(Z_INVERSE_LOGIC){ //look in defines.h for explanation

@@ -24,6 +24,7 @@ struct T_Motors Motor;
 struct T_Position toSetPosition;
 
 Position newPosition;
+PositionControl pControl;
 
 int instruction;
 
@@ -35,14 +36,11 @@ int instruction;
 void Data_Initialization(){
   // initialization of working data
   
+
+ //at the startup i want the platform to be in the ground
   newPosition.setZ(Z_MINLENGHT);
   newPosition.setInclination(INCLINATION_MIN);
   newPosition.setRotation(ROT_MIN);
-
- //at the startup i want the platform to be in the ground
-  toSetPosition.z_axis = Z_MINLENGHT;
-  toSetPosition.rotation = ROT_MIN;
-  toSetPosition.inclination = INCLINATION_MIN; 
 
   instruction = -1; //if -1 means that i have not recieved anything
     
@@ -66,8 +64,10 @@ void setup() {
     Serial.begin(9600);
     Data_Initialization();
     Hardware_Initialization();
-
     delay(2000);
+
+    //at the startup the platform goes to the 0 level
+    pControl.setDesiredPosition(newPosition);
     
 }
 
@@ -76,17 +76,17 @@ void setup() {
  * and process it with the instrunction.h file to get a position 
  * */
 void serial_input(){
-  instruction = getDataIn();
+  //instruction = getDataIn();
 
   if (! (instruction == -1) ){ //means that i have recived something
     //TODO READDATAIN in position
     Serial.print("DATA RECIEVED: position "); Serial.println(instruction);
   
     //using the position.h to get the position
-    toSetPosition = getcomandPosition(instruction);
+    //toSetPosition = getcomandPosition(instruction);
 
     //TODO modifying to send the control position a position and not a struct variable
-    set_Desired_Position(toSetPosition);
+    pControl.setDesiredPosition(newPosition);
   }
 
 }
@@ -99,7 +99,7 @@ void loop() {
   move_platform();
   
   //to be replaced with a write_status();
-  outSerial(outPosition());
+  outSerial(pControl.toStringCurrentPosition());
 
   delay(500);
 }
