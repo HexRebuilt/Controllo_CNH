@@ -5,9 +5,11 @@
 
 #include <Arduino.h>
 #include "Defines.h"
-#include "Data_Types.h"
-#include "Motor.h"
-#include "Positions.h" //it contains the value of the various position
+#include "Motors.h"
+#include "Positions.h"
+#include "Safety.h"
+
+
 class PositionControl {
   public:
     String toStringCurrentPosition(){
@@ -19,9 +21,15 @@ class PositionControl {
      * 
      * */
     void setDesiredPosition(Position dataIn){
+      
+      //TODO i need to include the rest to a "safe" position before move to another one
+      //only in case if i'm not at the ground level or inserting the pin blocks
+      dataIn = safety.isReachable(dataIn);
+
       desired.setZ(dataIn.getZ());
       desired.setInclination(dataIn.getInclination());
       desired.setRotation(dataIn.getRotation());
+      
     }
     
     /**
@@ -44,7 +52,7 @@ class PositionControl {
       int axis = 3;
       bool move[axis] = {z, incline, rotation}; //for cyclic check and movement
 
-      //checking if i need to move along each axis
+      //checking if i need to move along each axis 
       for (int i = 0; i < axis; i++)
       {
         if(move[i]){ //if true i need to move
@@ -53,15 +61,15 @@ class PositionControl {
           switch(i){
             case 0: //z axis
             delta = desired.getZ - current.getZ;
-            move_z_axis(delta);
+            motors.move_z_axis(delta);
             break;
             case 1: //inclination axis
             delta = desired.getInclination - current.getInclination;
-            move_inclination(delta);
+            motors.move_inclination(delta);
             break;
             case 2: //rotation axis
             delta = desired.getRotation - current.getRotation;
-            move_rotation(delta);
+            motors.move_rotation(delta);
             break;
           }
         }
@@ -75,6 +83,8 @@ class PositionControl {
     int adc = 0;//initialize it beafore the reading and it's shared between the reading function
     int steps = (int) pow(2.0,PRECISION) -1; //number of steps depending by the bits ex: 8 = 1023 it's the same for all
     int readvalue= 0;
+    Motors motors;
+    SafetyController safety;
 
     /**
      * one of the 3 sets of function that get a position from the analog sensors and gives back the readed value
@@ -153,5 +163,6 @@ class PositionControl {
         return false;
       }
     }
+
 
 };

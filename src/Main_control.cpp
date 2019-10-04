@@ -10,13 +10,11 @@
 #include <Arduino.h>
 #include <string.h>
 
-//file function and data that are included
-#include "Defines.h"  
-#include "Data_Types.h" 
+//files that contains classes and data that are needed
+#include "Defines.h"
 #include "Position_control.h" 
-#include "Serial_Comunication.h"
+#include "SerialComunication.h"
 #include "Positions.h"
-//#include "WiFi_comunication.h"
 
 
 Position newPosition;
