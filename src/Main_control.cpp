@@ -12,9 +12,10 @@
 
 //files that contains classes and data that are needed
 #include "Defines.h"
+#include "Positions.h"
+#include "Safety.h"
 #include "Position_control.h" 
 #include "SerialComunication.h"
-#include "Positions.h"
 
 
 Position newPosition;

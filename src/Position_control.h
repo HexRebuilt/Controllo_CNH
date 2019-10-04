@@ -4,10 +4,10 @@
  * */
 
 #include <Arduino.h>
-#include "Defines.h"
+//#include "Defines.h"
 #include "Motors.h"
-#include "Positions.h"
-#include "Safety.h"
+//#include "Positions.h"
+//#include "Safety.h"
 
 
 class PositionControl {
@@ -24,8 +24,6 @@ class PositionControl {
       
       //TODO i need to include the rest to a "safe" position before move to another one
       //only in case if i'm not at the ground level or inserting the pin blocks
-      dataIn = safety.isReachable(dataIn);
-
       desired.setZ(dataIn.getZ());
       desired.setInclination(dataIn.getInclination());
       desired.setRotation(dataIn.getRotation());
@@ -46,8 +44,8 @@ class PositionControl {
     void move_platform(){
       read_ALL();
 
-      bool z = need_to_move(current.getZ,desired.getZ, Z_TOLLERANCE);
-      bool incline = need_to_move(current.getRotation,desired.getRotation,ROT_TOLLERANCE);
+      bool z = need_to_move(current.getZ(),desired.getZ(), Z_TOLLERANCE);
+      bool incline = need_to_move(current.getRotation(),desired.getRotation(),ROT_TOLLERANCE);
       bool rotation = false; //need_to_move(current.getInclination ,desired.getInclination ,INCLINATION_TOLLERANCE);
       int axis = 3;
       bool move[axis] = {z, incline, rotation}; //for cyclic check and movement
@@ -60,15 +58,15 @@ class PositionControl {
           int delta; //difference from where i am and where i need to go
           switch(i){
             case 0: //z axis
-            delta = desired.getZ - current.getZ;
+            delta = desired.getZ() - current.getZ();
             motors.move_z_axis(delta);
             break;
             case 1: //inclination axis
-            delta = desired.getInclination - current.getInclination;
+            delta = desired.getInclination() - current.getInclination();
             motors.move_inclination(delta);
             break;
             case 2: //rotation axis
-            delta = desired.getRotation - current.getRotation;
+            delta = desired.getRotation() - current.getRotation();
             motors.move_rotation(delta);
             break;
           }
