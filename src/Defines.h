@@ -21,6 +21,11 @@
 #define INCLINATION_PIN A2//JOY Y
 #define ROTATION_PIN    A3//FIRE PIN
 
+//motor pins
+#define INCLINE_MOTOR_PIN   10  //cs x
+#define ROTATION_MOTOR_PIN  11  //cs y
+#define Z_MOTOR_PIN         12  //cs z
+
 //palleto position constant
 #define Z_NO_INCLINATION 500 //mm from the ground
 #define Z_GROUND         50 //mm under those it will be prevented to inclinate or rotate 

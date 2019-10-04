@@ -9,13 +9,12 @@
 
 #include <Arduino.h>
 #include <string.h>
+#include <SPI.h>
+//#include <Wire.h>
 
-//files that contains classes and data that are needed
 #include "Defines.h"
-#include "Positions.h"
-#include "Safety.h"
-#include "Position_control.h" 
-#include "SerialComunication.h"
+//files that contains classes and data that are needed
+#include "FilesToBeIncluded.h"
 
 
 Position newPosition;
@@ -47,6 +46,19 @@ void Hardware_Initialization(){
   pinMode(Z_AXIS_PIN,INPUT);
   pinMode(ROTATION_PIN,INPUT);
   pinMode(INCLINATION_PIN,INPUT);
+
+
+  //initialize i2c. Need to call only ONCE
+  //Wire.begin(); // begins and sets the I2C clock at 100KHz
+  //Wire.setClock(I2C_SPEED); // sets the I2C clock at 400KHz
+
+  // initializza serial port
+  Serial.begin(115200);
+
+  // SPI initialization
+  SPI.begin();
+  SPISettings(20000000, MSBFIRST, SPI_MODE3);
+
   
 }
 
