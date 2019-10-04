@@ -76,10 +76,11 @@ void setup() {
  * and process it with the instrunction.h file to get a position 
  * */
 void serial_input(){
+  
   //instruction = getDataIn();
 
   if (! (instruction == -1) ){ //means that i have recived something
-    //TODO READDATAIN in position
+    //TODO READDATAIN in a comunication file
     Serial.print("DATA RECIEVED: position "); Serial.println(instruction);
   
     //using the position.h to get the position
@@ -96,7 +97,7 @@ void loop() {
   // put your main code here, to run repeatedly:
 
   serial_input();
-  move_platform();
+  pControl.move_platform();
   
   //to be replaced with a write_status();
   outSerial(pControl.toStringCurrentPosition());
