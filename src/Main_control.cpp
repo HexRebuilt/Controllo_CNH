@@ -18,14 +18,10 @@
 #include "Positions.h"
 //#include "WiFi_comunication.h"
 
-//TODO the motor output must be controllerd by position contorl
-struct T_Motors Motor;
-//TODO move it to a setter in position_control that will include the class position
-struct T_Position toSetPosition;
 
 Position newPosition;
 PositionControl pControl;
-
+SerialComunication comunication;
 int instruction;
 
 
@@ -77,14 +73,13 @@ void setup() {
  * */
 void serial_input(){
   
-  //instruction = getDataIn();
+  instruction = comunication.getDataIn();
 
   if (! (instruction == -1) ){ //means that i have recived something
     //TODO READDATAIN in a comunication file
     Serial.print("DATA RECIEVED: position "); Serial.println(instruction);
   
-    //using the position.h to get the position
-    //toSetPosition = getcomandPosition(instruction);
+     //TODO adding a logic structure to the comunication
 
     //TODO modifying to send the control position a position and not a struct variable
     pControl.setDesiredPosition(newPosition);
@@ -99,8 +94,7 @@ void loop() {
   serial_input();
   pControl.move_platform();
   
-  //to be replaced with a write_status();
-  outSerial(pControl.toStringCurrentPosition());
+  comunication.outSerial( pControl.toStringCurrentPosition() );
 
   delay(500);
 }
