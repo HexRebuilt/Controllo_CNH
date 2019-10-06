@@ -1,6 +1,8 @@
 /**
- * File that's needed in order to transform the input string as a comand to a
- * position that has to be returned after a decoding
+ * File that's needed in order to transform any input string as a comand to a
+ * position that has to be returned after a decoding it properly.
+ * The string has to be properly formatted in order to be readed.
+* STRING FORMAT: zValue[mm]-inclineValue[deg]-rotValue[deg]
  * */
 
 #include <Arduino.h>
@@ -37,33 +39,33 @@ class InstructionDecoder{
         }
         
     private:
-    Position newPosition;
-    /**
-     * function that given the ammount of comand analyzed sets the corrisponding value
-     * in the newPosition.
-     * INPUT FORMAT: zValue[mm]-inclineValue[deg]-rotValue[deg]
-     * */
-    void setPosition(int comandRead, int newValue){
-        switch (comandRead)
-        {
-        case 0:
-            //i'm reading the z
-            newPosition.setZ(newValue);
-            break;
-        case 1:
-            //i'm reading the inclination
-            newPosition.setInclination(newValue);
-            break;
-        case 2:
-            //i'm reading the rotation
-            newPosition.setRotation(newValue);
-            break;
+        Position newPosition;
+        /**
+         * function that given the ammount of comand analyzed sets the corrisponding value
+         * in the newPosition.
+         * INPUT FORMAT: zValue[mm]-inclineValue[deg]-rotValue[deg]
+         * */
+        void setPosition(int comandRead, int newValue){
+            switch (comandRead)
+            {
+            case 0:
+                //i'm reading the z
+                newPosition.setZ(newValue);
+                break;
+            case 1:
+                //i'm reading the inclination
+                newPosition.setInclination(newValue);
+                break;
+            case 2:
+                //i'm reading the rotation
+                newPosition.setRotation(newValue);
+                break;
 
-        default:
-            Serial.println("Error during the decodification of the string!");
-            break;
+            default:
+                Serial.println("Error during the decodification of the string!");
+                break;
+            }
         }
-    }
     
 
 };

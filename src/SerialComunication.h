@@ -13,7 +13,6 @@ class SerialComunication {
          * 
          * the output will be sent to a decoder
          * */
-
         String getDataIn(){
             String instring = "";
                 while (Serial.available() > 0) {
