@@ -9,13 +9,12 @@ class SerialComunication {
     public:
         /**
          * function to read from a serial port
-         * if i get a -1 it means that there is no input so i don't need to proceed analyzing it
+         * if i get a "" it means that there is no input so i don't need to proceed analyzing it
          * 
-         * TODO using a binary condification for sending the messagges. for now it just works but for adding more steps it's necessary to add those
+         * the output will be sent to a decoder
          * */
 
-        int getDataIn(){
-            int value = -1;
+        String getDataIn(){
             String instring = "";
                 while (Serial.available() > 0) {
                     int inChar = Serial.read();
@@ -27,12 +26,7 @@ class SerialComunication {
                         instring += (char)inChar;
                     }
                 }
-                
-                if(!instring.equals("")){ //if i have read somwthing
-                    value = instring.toInt();
-                    instring = "";
-                }
-            return value;
+            return instring;
         }
 
 

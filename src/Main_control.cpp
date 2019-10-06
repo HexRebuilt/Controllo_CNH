@@ -12,15 +12,15 @@
 #include <SPI.h>
 //#include <Wire.h>
 
-#include "Defines.h"
 //files that contains classes and data that are needed
 #include "FilesToBeIncluded.h"
 
 
 Position newPosition;
 PositionControl pControl;
+InstructionDecoder decoder;
 SerialComunication comunication;
-int instruction;
+String instruction;
 
 
 
@@ -46,6 +46,9 @@ void Hardware_Initialization(){
   pinMode(Z_AXIS_PIN,INPUT);
   pinMode(ROTATION_PIN,INPUT);
   pinMode(INCLINATION_PIN,INPUT);
+  pinMode(Z_MOTOR_PIN,OUTPUT);
+  pinMode(INCLINE_MOTOR_PIN,OUTPUT);
+  pinMode(ROTATION_MOTOR_PIN,OUTPUT);
 
 
   //initialize i2c. Need to call only ONCE
@@ -65,8 +68,6 @@ void Hardware_Initialization(){
 //TODO: remove the while loop when used without the serial port attached
 void setup() {
     // put your setup code here, to run once:
-
-
     analogReadResolution(PRECISION);
     Serial.begin(9600);
     Data_Initialization();
@@ -78,31 +79,19 @@ void setup() {
     
 }
 
-/**
- * Function that manages the reception and setting of the string input from serial
- * and process it with the instrunction.h file to get a position 
- * */
-void serial_input(){
-  
-  instruction = comunication.getDataIn();
-
-  if (! (instruction == -1) ){ //means that i have recived something
-    //TODO READDATAIN in a comunication file
-    Serial.print("DATA RECIEVED: position "); Serial.println(instruction);
-  
-     //TODO adding a logic structure to the comunication
-
-    //TODO modifying to send the control position a position and not a struct variable
-    pControl.setDesiredPosition(newPosition);
-  }
-
+void reading(){
+    instruction = comunication.getDataIn();
+    if (!(instruction.compareTo(""))){ //means that i have read something
+      newPosition = decoder.inputAnalyze(instruction);
+      pControl.setDesiredPosition(newPosition);
+    }
 }
 
 
 void loop() {
   // put your main code here, to run repeatedly:
+  reading();
 
-  serial_input();
   pControl.move_platform();
   
   comunication.outSerial( pControl.toStringCurrentPosition() );

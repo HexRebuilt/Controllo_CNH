@@ -16,12 +16,12 @@
 //bit for the adc
 #define PRECISION 12
 
-//analog pins             //for the old board
-#define Z_AXIS_PIN      A1//JOY X
-#define INCLINATION_PIN A2//JOY Y
-#define ROTATION_PIN    A3//FIRE PIN
+//analog pins               //for the old board
+#define Z_AXIS_PIN      A1  //JOY X
+#define INCLINATION_PIN A2  //JOY Y
+#define ROTATION_PIN    A3  //FIRE PIN
 
-//motor pins
+//motor pins                    //from the old board
 #define INCLINE_MOTOR_PIN   10  //cs x
 #define ROTATION_MOTOR_PIN  11  //cs y
 #define Z_MOTOR_PIN         12  //cs z
