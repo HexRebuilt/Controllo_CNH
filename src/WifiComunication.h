@@ -15,8 +15,9 @@ class WiFiComunication{
     char pass[SECRET_PSW_LENGHT] = SECRET_PSW;         // your network password (use for WPA, or use as key for WEP)
     int status = WL_IDLE_STATUS;      // the WiFi radio's status
 
-    WiFiServer server(80);
- 
+    
+    WiFiServer server(200);
+        
     //set of arduino base function to connect to a network
     void printWiFiData() {
         // print your WiFi shield's IP address:
@@ -31,7 +32,7 @@ class WiFiComunication{
         Serial.print("MAC address: ");
         printMacAddress(mac);
 
-        }
+    }
 
     void printCurrentNet() {
         // print the SSID of the network you're attached to:
@@ -54,7 +55,7 @@ class WiFiComunication{
         Serial.print("Encryption Type:");
         Serial.println(encryption, HEX);
         Serial.println();
-        }
+    }
 
     void printMacAddress(byte mac[]) {
         for (int i = 5; i >= 0; i--) {
@@ -71,94 +72,85 @@ class WiFiComunication{
     
     public:
 
-    /**
-     * function that creates the html page with the reading information 
-     * 
-     * TODO adding the set line
-     * */
-    void writeHTML (String messageOut){
-        WiFiClient client = server.available();
-        if (client) {
-            // an http request ends with a blank line
-            boolean currentLineIsBlank = true;
-            while (client.connected()) {
-            if (client.available()) {
-                char c = client.read();
-                // if you've gotten to the end of the line (received a newline
-                // character) and the line is blank, the http request has ended,
-                // so you can send a reply
-                if (c == '\n' && currentLineIsBlank) {
-                // send a standard http response header
-                client.println("HTTP/1.1 200 OK");
-                client.println("Content-Type: text/html");
-                client.println();
-                client.println("<html>");
-                // output the value of each analog input pin
-                client.println(messageOut);
-                client.println("</html>");
-                break;
+        /**
+         * function that creates the html page with the reading information 
+         * 
+         * TODO adding the set line
+         * */
+        void writeHTML (String messageOut){
+            WiFiClient client = server.available();
+            if (client) {
+                // an http request ends with a blank line
+                boolean currentLineIsBlank = true;
+                while (client.connected()) {
+                if (client.available()) {
+                    char c = client.read();
+                    // if you've gotten to the end of the line (received a newline
+                    // character) and the line is blank, the http request has ended,
+                    // so you can send a reply
+                    if (c == '\n' && currentLineIsBlank) {
+                    // send a standard http response header
+                    client.println("HTTP/1.1 200 OK");
+                    client.println("Content-Type: text/html");
+                    client.println();
+                    client.println("<html>");
+                    // output the value of each analog input pin
+                    client.println(messageOut);
+                    client.println("</html>");
+                    break;
+                    }
+                    if (c == '\n') {
+                    // you're starting a new line
+                    currentLineIsBlank = true;
+                    }
+                    else if (c != '\r') {
+                    // you've gotten a character on the current line
+                    currentLineIsBlank = false;
+                    }
                 }
-                if (c == '\n') {
-                // you're starting a new line
-                currentLineIsBlank = true;
                 }
-                else if (c != '\r') {
-                // you've gotten a character on the current line
-                currentLineIsBlank = false;
-                }
+                // give the web browser time to receive the data
+                delay(1);
+                // close the connection:
+                client.stop();
             }
-            }
-            // give the web browser time to receive the data
-            delay(1);
-            // close the connection:
-            client.stop();
-        }
-    }    
-    
-    boolean clientPresent(){
-        if(server.available()){
-            Serial.println("client connected");
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    void startup(){
-        WiFi.setPins(8,7,4,2); //in order to use the wifi module
-        while (!Serial) {
-            ; // wait for serial port to connect. Needed for native USB port only
-        }
-
-        // check for the presence of the shield:
-        if (WiFi.status() == WL_NO_SHIELD) {
-            Serial.println("WiFi shield not present");
-            // don't continue:
-            while (true);
-        }
-        // attempt to connect to WiFi network:
-        Serial.print("Attempting to connect to WPA SSID: ");
-        Serial.println(ssid);
-        // Connect to WPA/WPA2 network:
-        status = WiFi.begin(ssid, pass);
-        // wait 10 seconds for connection:
-        delay(10000);
-
-        if ( status != WL_CONNECTED) {
-            Serial.println("Couldn't get a wifi connection");
-        }
-        else {
-            // you're connected now, so print out the data:
-            Serial.print("You're connected to the network");
-            printCurrentNet();
-            printWiFiData();
-            server.begin();
-        }
-    }
+        }    
         
-    String getDataIn(){
 
-        return instruction;
-    }
+        void startup(){
+            WiFi.setPins(8,7,4,2); //in order to use the wifi module
+            while (!Serial) {
+                ; // wait for serial port to connect. Needed for native USB port only
+            }
+
+            // check for the presence of the shield:
+            if (WiFi.status() == WL_NO_SHIELD) {
+                Serial.println("WiFi shield not present");
+                // don't continue:
+                while (true);
+            }
+            // attempt to connect to WiFi network:
+            Serial.print("Attempting to connect to WPA SSID: ");
+            Serial.println(ssid);
+            // Connect to WPA/WPA2 network:
+            status = WiFi.begin(ssid, pass);
+            // wait 10 seconds for connection:
+            delay(10000);
+
+            if ( status != WL_CONNECTED) {
+                Serial.println("Couldn't get a wifi connection");
+            }
+            else {
+                // you're connected now, so print out the data:
+                Serial.print("You're connected to the network");
+                printCurrentNet();
+                printWiFiData();
+                server.begin();
+            }
+        }
+            
+        String getDataIn(){
+
+            return instruction;
+        }
 };
