@@ -20,10 +20,7 @@ class Comunication{
         if(Serial.available()){
             Serial.println(messageOut);
         }
-        else if(wifiComunication.clientPresent())
-        {
-            wifiComunication.writeHTML(messageOut);
-        }
+        wifiComunication.writeHTML(messageOut);
     }
 
     Position read(){
