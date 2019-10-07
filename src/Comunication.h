@@ -5,7 +5,6 @@
 
 #include <Arduino.h>
 
-
 class Comunication{
     
     private:
@@ -13,8 +12,19 @@ class Comunication{
         String instruction;
         InstructionDecoder decoder;
         SerialComunication serialPort; 
+        WiFiComunication wifiComunication;
      
     public:
+
+    void write(String messageOut){
+        if(Serial.available()){
+            Serial.println(messageOut);
+        }
+        else if(wifiComunication.clientPresent())
+        {
+            wifiComunication.writeHTML(messageOut);
+        }
+    }
 
     Position read(){
         if(Serial.available()){
@@ -23,11 +33,17 @@ class Comunication{
             readed = decoder.inputAnalyze(instruction);
             }
         }
+        else if (wifiComunication.clientPresent())
+        {
+            /* code */
+        }
+        
         return readed;
     }   
 
     void startup(Position initialPosition){
         readed = initialPosition;
         Serial.begin(12500);
+        wifiComunication.startup();
     }             
 };

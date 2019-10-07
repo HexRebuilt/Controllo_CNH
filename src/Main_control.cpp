@@ -16,12 +16,8 @@
 
 String messageOut;
 Position newPosition;
-PositionControl pControl;
 Comunication comunication;
-
-
-
-
+PositionControl pControl;
 
 
 void Data_Initialization(){
@@ -82,6 +78,7 @@ void loop() {
   pControl.setDesiredPosition(newPosition);
   pControl.move_platform();
   messageOut = pControl.toStringCurrentPosition();
+  comunication.write(messageOut);
 
   delay(500);
 }
