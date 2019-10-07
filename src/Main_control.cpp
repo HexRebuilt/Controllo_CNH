@@ -15,12 +15,10 @@
 //files that contains classes and data that are needed
 #include "FilesToBeIncluded.h"
 
-
+String messageOut;
 Position newPosition;
 PositionControl pControl;
-InstructionDecoder decoder;
-SerialComunication comunication;
-String instruction;
+Comunication comunication;
 
 
 
@@ -69,8 +67,8 @@ void Hardware_Initialization(){
 void setup() {
     // put your setup code here, to run once:
     analogReadResolution(PRECISION);
-    Serial.begin(9600);
     Data_Initialization();
+    comunication.startup(newPosition);
     Hardware_Initialization();
     delay(2000);
 
@@ -79,22 +77,14 @@ void setup() {
     
 }
 
-void reading(){
-    instruction = comunication.getDataIn();
-    if (!(instruction.compareTo(""))){ //means that i have read something
-      newPosition = decoder.inputAnalyze(instruction);
-      pControl.setDesiredPosition(newPosition);
-    }
-}
 
 
 void loop() {
   // put your main code here, to run repeatedly:
-  reading();
-
+  newPosition = comunication.read();
+  pControl.setDesiredPosition(newPosition);
   pControl.move_platform();
-  
-  comunication.outSerial( pControl.toStringCurrentPosition() );
+  messageOut = pControl.toStringCurrentPosition();
 
   delay(500);
 }

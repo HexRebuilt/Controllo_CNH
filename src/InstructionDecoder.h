@@ -9,7 +9,6 @@
 
 class InstructionDecoder{
     public:
-
         /**
          * function that checks the string in input and decodes it. 
          * STRING FORMAT: zValue[mm]-inclineValue[deg]-rotValue[deg]

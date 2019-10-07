@@ -5,8 +5,9 @@
  * each class in order to save memory space.
  * */
 #include "Defines.h"
-#include "SerialComunication.h"
 #include "Positions.h"
+#include "SerialComunication.h"
+#include "Comunication.h"
 //those files requires position.h
 #include "InstructionDecoder.h"
 #include "Safety.h"
