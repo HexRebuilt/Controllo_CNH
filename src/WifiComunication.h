@@ -12,9 +12,10 @@ class WiFiComunication{
     
     ///////please enter your sensitive data in the Secret tab/Secrets.h
     char ssid[] = SECRET_SSID;        // your network SSID (name)
-    char pass[] = SECRET_PSW;    // your network password (use for WPA, or use as key for WEP)
-    int status = WL_IDLE_STATUS;     // the WiFi radio's status
+    char pass[] = SECRET_PSW;         // your network password (use for WPA, or use as key for WEP)
+    int status = WL_IDLE_STATUS;      // the WiFi radio's status
     
+    //set of arduino base function to connect to a network
     void printWiFiData() {
         // print your WiFi shield's IP address:
         IPAddress ip = WiFi.localIP();

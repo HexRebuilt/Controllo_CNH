@@ -10,7 +10,6 @@
 #include <Arduino.h>
 #include <string.h>
 #include <SPI.h>
-//#include <Wire.h>
 
 //files that contains classes and data that are needed
 #include "FilesToBeIncluded.h"
