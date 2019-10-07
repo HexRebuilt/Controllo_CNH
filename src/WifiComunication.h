@@ -15,7 +15,7 @@ class WiFiComunication{
     char pass[SECRET_PSW_LENGHT] = SECRET_PSW;         // your network password (use for WPA, or use as key for WEP)
     int status = WL_IDLE_STATUS;      // the WiFi radio's status
 
-    WiFiServer server = startup();
+    WiFiServer server(80);
  
     //set of arduino base function to connect to a network
     void printWiFiData() {
@@ -125,7 +125,7 @@ class WiFiComunication{
         }
     }
 
-    WiFiServer startup(){
+    void startup(){
         WiFi.setPins(8,7,4,2); //in order to use the wifi module
         while (!Serial) {
             ; // wait for serial port to connect. Needed for native USB port only
@@ -137,8 +137,6 @@ class WiFiComunication{
             // don't continue:
             while (true);
         }
-        WiFiServer tmpserver(80);
-        //server = tmpserver;
         // attempt to connect to WiFi network:
         Serial.print("Attempting to connect to WPA SSID: ");
         Serial.println(ssid);
@@ -155,9 +153,8 @@ class WiFiComunication{
             Serial.print("You're connected to the network");
             printCurrentNet();
             printWiFiData();
-            tmpserver.begin();
+            server.begin();
         }
-        return tmpserver;
     }
         
     String getDataIn(){
