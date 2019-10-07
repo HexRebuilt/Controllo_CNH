@@ -27,17 +27,15 @@ class Comunication{
     }
 
     Position read(){
+        
+        instruction = wifiComunication.getDataIn();
+        //the serial port is more important then wifi so overwrites its comand
         if(Serial.available()){
             instruction = serialPort.getDataIn();
-            if (!(instruction.compareTo(""))){ //means that i have read something
+        }
+        if (!(instruction.compareTo(""))){ //means that i have read something
             readed = decoder.inputAnalyze(instruction);
             }
-        }
-        else if (wifiComunication.clientPresent())
-        {
-            /* code */
-        }
-        
         return readed;
     }   
 
