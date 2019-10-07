@@ -6,10 +6,11 @@
  * */
 #include "Defines.h"
 #include "Positions.h"
+#include "InstructionDecoder.h"
 #include "SerialComunication.h"
+#include "WifiComunication.h"
 #include "Comunication.h"
 //those files requires position.h
-#include "InstructionDecoder.h"
 #include "Safety.h"
 #include "Motors.h"
 //position control uses the previous library so must be included afterwards

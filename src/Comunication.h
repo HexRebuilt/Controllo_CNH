@@ -6,7 +6,6 @@
 #include <Arduino.h>
 
 
-
 class Comunication{
     
     private:
@@ -18,7 +17,7 @@ class Comunication{
     public:
 
     Position read(){
-        if(Serial.available){
+        if(Serial.available()){
             instruction = serialPort.getDataIn();
             if (!(instruction.compareTo(""))){ //means that i have read something
             readed = decoder.inputAnalyze(instruction);

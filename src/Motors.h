@@ -7,7 +7,7 @@
 #include "Defines.h" //it has information about the digital potentiometer
 
 #ifdef MPC4131
-#define STEPS 128 //it has 129 steps. one is for the 0 porition
+    #define STEPS 128 //it has 129 steps. one is for the 0 porition
 #endif
 
 class Motors{

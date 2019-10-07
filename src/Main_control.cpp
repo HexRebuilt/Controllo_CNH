@@ -33,9 +33,7 @@ void Data_Initialization(){
   newPosition.setZ(Z_MINLENGHT);
   newPosition.setInclination(INCLINATION_MIN);
   newPosition.setRotation(ROT_MIN);
-
-  instruction = -1; //if -1 means that i have not recieved anything
-    
+  
 };
 
 

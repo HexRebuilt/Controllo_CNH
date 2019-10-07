@@ -15,11 +15,11 @@ class InstructionDecoder{
          * */
         Position inputAnalyze(String instruction){
             Serial.print("DATA RECIEVED: position "); Serial.println(instruction);
-            size_t inputLenght = sizeof(instruction) / sizeof (instruction[0]);
+            int inputLenght = sizeof(instruction) / sizeof (instruction[0]);
             int comandRead = 0; //indicates which position has to be set
             String analyzed = "";
             
-            for (int i=0; i <inputLenght; i++){
+            for (int i=0; i < inputLenght; i++){
                 char current = instruction.charAt(i);
                 if ( current == '-' ) //means that i have found a delimiter character
                 {
