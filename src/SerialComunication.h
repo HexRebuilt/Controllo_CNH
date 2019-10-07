@@ -30,7 +30,7 @@ class SerialComunication {
 
 
         /**
-         * function to output data from the serial connection
+         * function to output data from the connection
          * param: strout is the string to be displayed with the info
          * */
         void outSerial(String strout){

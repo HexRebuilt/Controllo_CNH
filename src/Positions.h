@@ -22,7 +22,7 @@ class Position {
         String write_Z_Height(){
             String tmp = "Z height: "; 
             tmp.concat (String(z_axis));
-            tmp.concat (" mm");
+            tmp.concat (" mm\n");
             return tmp;
         }
 
@@ -31,8 +31,8 @@ class Position {
          * */
         String write_rot_degree(){
             String tmp = "Rot degree: "; 
-            tmp.concat (String(inclination));
-            tmp.concat ("°");
+            tmp.concat (String(rotation));
+            tmp.concat ("°\n");
             return tmp;
         }
         
@@ -42,7 +42,7 @@ class Position {
         String write_inclination_degree(){
             String tmp = "Inclination degree: "; 
             tmp.concat (String(inclination));
-            tmp.concat ("°");
+            tmp.concat ("°\n");
             return tmp;
         }
     

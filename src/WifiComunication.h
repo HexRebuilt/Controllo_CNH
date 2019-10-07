@@ -4,20 +4,20 @@
 
 #include <Arduino.h>
 #include <WiFi101.h>
+    
+    ///////please enter your sensitive data in the Secret tab/Secrets.h
+    char ssid[] = SECRET_SSID;        // your network SSID (name)
+    char pass[] = SECRET_PSW;         // your network password (use for WPA, or use as key for WEP)
+    int status = WL_IDLE_STATUS;      // the WiFi radio's status
 
+    //in order to work it's required to be outside the class
+    WiFiServer server(80);
 
 class WiFiComunication{
     private:
     
     String instruction = "";
-    ///////please enter your sensitive data in the Secret tab/Secrets.h
-    char ssid[SECRET_SSID_LENGHT] = SECRET_SSID;        // your network SSID (name)
-    char pass[SECRET_PSW_LENGHT] = SECRET_PSW;         // your network password (use for WPA, or use as key for WEP)
-    int status = WL_IDLE_STATUS;      // the WiFi radio's status
 
-    
-    WiFiServer server(200);
-        
     //set of arduino base function to connect to a network
     void printWiFiData() {
         // print your WiFi shield's IP address:
@@ -92,7 +92,12 @@ class WiFiComunication{
                     // send a standard http response header
                     client.println("HTTP/1.1 200 OK");
                     client.println("Content-Type: text/html");
+                    //lines added later
+                    //client.println("Connection: close");  // the connection will be closed after completion of the response
+                    client.println("Refresh: 5");  // refresh the page automatically every 5 sec
+                    client.println("<!DOCTYPE HTML>");
                     client.println();
+
                     client.println("<html>");
                     // output the value of each analog input pin
                     client.println(messageOut);

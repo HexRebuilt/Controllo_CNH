@@ -33,6 +33,7 @@ class Comunication{
         if (!(instruction.compareTo(""))){ //means that i have read something
             readed = decoder.inputAnalyze(instruction);
             }
+        
         return readed;
     }   
 

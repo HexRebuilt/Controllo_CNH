@@ -14,24 +14,26 @@ class InstructionDecoder{
          * STRING FORMAT: zValue[mm]-inclineValue[deg]-rotValue[deg]
          * */
         Position inputAnalyze(String instruction){
-            Serial.print("DATA RECIEVED: position "); Serial.println(instruction);
-            int inputLenght = sizeof(instruction) / sizeof (instruction[0]);
-            int comandRead = 0; //indicates which position has to be set
-            String analyzed = "";
-            
-            for (int i=0; i < inputLenght; i++){
-                char current = instruction.charAt(i);
-                if ( current == '-' ) //means that i have found a delimiter character
-                {
-                    Serial.println("analyzing the portion of the string");
-                    int newValue = analyzed.toInt();
-                    setPosition(comandRead,newValue);
-                    
-                    comandRead++;
-                    analyzed = "";
-                }
-                else{
-                    analyzed += (char)current; //i'm adding the value to the string to be anlyzed
+                if(instruction.compareTo("")){
+                Serial.print("DATA RECIEVED: position "); Serial.println(instruction);
+                int inputLenght = sizeof(instruction) / sizeof (instruction[0]);
+                int comandRead = 0; //indicates which position has to be set
+                String analyzed = "";
+                
+                for (int i=0; i < inputLenght; i++){
+                    char current = instruction.charAt(i);
+                    if ( current == '-' ) //means that i have found a delimiter character
+                    {
+                        Serial.println("analyzing the portion of the string");
+                        int newValue = analyzed.toInt();
+                        setPosition(comandRead,newValue);
+                        
+                        comandRead++;
+                        analyzed = "";
+                    }
+                    else{
+                        analyzed += (char)current; //i'm adding the value to the string to be anlyzed
+                    }
                 }
             }
             return newPosition;

@@ -16,18 +16,18 @@ class Motors{
          * Sets of 3 function in charge of moving the motor
          * */        
         void move_z_axis(int delta){
-            Serial.println("Moving Z");
+            //Serial.println("Moving Z");
             setPotentiometer(Z_MOTOR_PIN, step_value(delta));
             
         }
 
         void move_inclination(int delta){
-            Serial.println("Moving inclination");
+            //Serial.println("Moving inclination");
             setPotentiometer(INCLINE_MOTOR_PIN, step_value(delta));
         }
 
         void move_rotation(int delta){
-            Serial.println("Moving rotation");
+            //Serial.println("Moving rotation");
             setPotentiometer(ROTATION_MOTOR_PIN, step_value(delta));
         }
 
