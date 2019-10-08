@@ -29,9 +29,13 @@ class Comunication{
         //the serial port is more important then wifi so overwrites its comand
         if(Serial.available()){
             instruction = serialPort.getDataIn();
+            instruction.concat("-");//to solve a bug
         }
-        if (!(instruction.compareTo(""))){ //means that i have read something
+        if ((instruction.compareTo(""))){ //means that i have read something
             readed = decoder.inputAnalyze(instruction);
+            instruction = "";
+            Serial.print("New Position: ");
+            Serial.println(readed.toStringPosition());
             }
         
         return readed;
@@ -39,7 +43,7 @@ class Comunication{
 
     void startup(Position initialPosition){
         readed = initialPosition;
-        Serial.begin(12500);
+        Serial.begin(19200);
         wifiComunication.startup();
     }             
 };

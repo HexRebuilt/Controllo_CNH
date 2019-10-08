@@ -14,20 +14,21 @@ class InstructionDecoder{
          * STRING FORMAT: zValue[mm]-inclineValue[deg]-rotValue[deg]
          * */
         Position inputAnalyze(String instruction){
-                if(instruction.compareTo("")){
-                Serial.print("DATA RECIEVED: position "); Serial.println(instruction);
-                int inputLenght = sizeof(instruction) / sizeof (instruction[0]);
+            if(instruction.compareTo("")){
+                Serial.print("DATA RECIEVED: "); Serial.println(instruction);
+                int inputLenght = instruction.length();
+                
+                Serial.print("input debug lenght: ");
+                Serial.println(inputLenght);
+                inputLenght++;
                 int comandRead = 0; //indicates which position has to be set
                 String analyzed = "";
                 
                 for (int i=0; i < inputLenght; i++){
                     char current = instruction.charAt(i);
-                    if ( current == '-' ) //means that i have found a delimiter character
-                    {
-                        Serial.println("analyzing the portion of the string");
+                    if ( (current == '-' ) || (current == (inputLenght-1)) ){ //means that i have found a delimiter character                   
                         int newValue = analyzed.toInt();
                         setPosition(comandRead,newValue);
-                        
                         comandRead++;
                         analyzed = "";
                     }
@@ -41,6 +42,7 @@ class InstructionDecoder{
         
     private:
         Position newPosition;
+
         /**
          * function that given the ammount of comand analyzed sets the corrisponding value
          * in the newPosition.
@@ -67,6 +69,7 @@ class InstructionDecoder{
                 break;
             }
         }
-    
+
+
 
 };

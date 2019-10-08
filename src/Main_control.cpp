@@ -66,6 +66,7 @@ void setup() {
     delay(2000);
 
     //at the startup the platform goes to the 0 level
+    //TODO adding the check on safety pin connected in order to change the minimum height at the startup
     pControl.setDesiredPosition(newPosition);
     
 }
