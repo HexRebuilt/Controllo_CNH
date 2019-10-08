@@ -16,7 +16,7 @@
 class WiFiComunication{
     private:
     
-    String instruction = "";
+    String readString = "";
 
     void clientConnected(){
         // compare the previous status to the current status
@@ -127,6 +127,12 @@ class WiFiComunication{
                 while (client.connected()) {
                     if (client.available()) {
                         char c = client.read();
+                        
+                        if (readString.length() < 100) {
+                            //store characters to string
+                            readString += c;
+                        }
+
                         // if you've gotten to the end of the line (received a newline
                         // character) and the line is blank, the http request has ended,
                         // so you can send a reply
@@ -140,10 +146,31 @@ class WiFiComunication{
                         client.println("<!DOCTYPE HTML>");
                         client.println();
 
-                        client.println("<html>");
+                        //printing the webpage
+                        client.println("<HTML>");
+                        client.println("<HEAD>");
+                        client.println("<TITLE>Arduino GET test page</TITLE>");
+                        client.println("</HEAD>");
+                        client.println("<BODY>");
+
+                        client.println("<H1>HTML form GET example</H1>");
+
+                        client.println("<FORM ACTION='/' method=get >"); //uses IP/port of web page
+
+                        client.println("Pin 5 'on5' or 'off5': <INPUT TYPE=TEXT NAME='LED' VALUE='' SIZE='25' MAXLENGTH='50'><BR>");
+
+                        client.println("<INPUT TYPE=SUBMIT NAME='submit' VALUE='Change Pin 5!'>");
+
+                        client.println("</FORM>");
+
                         // output the value of each analog input pin
                         client.println(messageOut);
-                        client.println("</html>");
+
+                        client.println("<BR>");
+
+                        client.println("</BODY>");
+                        client.println("</HTML>");
+
                         break;
                     }
                     if (c == '\n') {
@@ -166,10 +193,7 @@ class WiFiComunication{
 
         void startup(){
             WiFi.setPins(8,7,4,2); //in order to use the wifi module
-            while (!Serial) {
-                ; // wait for serial port to connect. Needed for native USB port only
-            }
-
+            
             // check for the presence of the shield:
             if (WiFi.status() == WL_NO_SHIELD) {
                 Serial.println("WiFi shield not present");
@@ -213,7 +237,11 @@ class WiFiComunication{
         }
             
         String getDataIn(){
-
-            return instruction;
+            Serial.println(readString);
+            String tmp = readString;
+            
+            //clearing string for next read
+            readString="";
+            return tmp;
         }
 };

@@ -59,6 +59,8 @@ void Hardware_Initialization(){
 //TODO: remove the while loop when used without the serial port attached
 void setup() {
     // put your setup code here, to run once:
+    
+
     analogReadResolution(PRECISION);
     Data_Initialization();
     comunication.startup(newPosition);

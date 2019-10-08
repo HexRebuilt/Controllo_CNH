@@ -6,6 +6,7 @@
  * */
 
 #include <Arduino.h>
+#include <strings.h>
 
 class InstructionDecoder{
     public:
@@ -16,16 +17,14 @@ class InstructionDecoder{
         Position inputAnalyze(String instruction){
             if(instruction.compareTo("")){
                 Serial.print("DATA RECIEVED: "); Serial.println(instruction);
-                int inputLenght = instruction.length();
-                char instr[] = instruction. ;
-                char * split = strtok(instr,"-");
-                //inputLenght++;
+                int inputLenght = instruction.length() +1; //counting the \n of temrination
                 int comandRead = 0; //indicates which position has to be set
                 String analyzed = "";
-                
+                instruction.concat(CHARACTER_SPLITTER);
+
                 for (int i=0; i < inputLenght; i++){
                     char current = instruction.charAt(i);
-                    if ( (current == '-' ) || (current == (inputLenght-1)) ){ //means that i have found a delimiter character                   
+                    if (current == CHARACTER_SPLITTER ){ //means that i have found a delimiter character                   
                         int newValue = analyzed.toInt();
                         setPosition(comandRead,newValue);
                         comandRead++;

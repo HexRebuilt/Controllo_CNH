@@ -10,6 +10,9 @@
 #define TIMER_PRESCALER_DIV 1024
 #define INT_FREQUENCY 10
 
+//comunication
+#define CHARACTER_SPLITTER '-'
+
 //digital potentiometer type
 #define MPC4131
 

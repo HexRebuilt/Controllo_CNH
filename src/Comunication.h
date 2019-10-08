@@ -27,7 +27,7 @@ class Comunication{
         
         instruction = wifiComunication.getDataIn();
         //the serial port is more important then wifi so overwrites its comand
-        if(Serial.available()){
+        if(Serial.available() && instruction.compareTo("") ){
             instruction = serialPort.getDataIn();
             //instruction.concat("-");//to solve a bug
         }
