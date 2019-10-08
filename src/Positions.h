@@ -15,14 +15,15 @@ class Position {
         int z_axis;
         int inclination;
         int rotation;
+        String termination = "\t\n";
     
         /**
          * function that gives back an output formatted string 
          * */
         String write_Z_Height(){
-            String tmp = "Z height: "; 
+            String tmp = "Z height [mm]: "; 
             tmp.concat (String(z_axis));
-            tmp.concat (" mm\n");
+            tmp.concat (termination);
             return tmp;
         }
 
@@ -30,9 +31,9 @@ class Position {
          * function that gives back an output formatted string 
          * */
         String write_rot_degree(){
-            String tmp = "Rot degree: "; 
+            String tmp = "Rot degrees: "; 
             tmp.concat (String(rotation));
-            tmp.concat ("°\n");
+            tmp.concat (termination);
             return tmp;
         }
         
@@ -40,9 +41,9 @@ class Position {
          * function that gives back an output formatted string 
          * */
         String write_inclination_degree(){
-            String tmp = "Inclination degree: "; 
+            String tmp = "Inclination degrees: "; 
             tmp.concat (String(inclination));
-            tmp.concat ("°\n");
+            tmp.concat (termination);
             return tmp;
         }
     

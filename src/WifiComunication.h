@@ -94,7 +94,7 @@ class WiFiComunication{
                     client.println("Content-Type: text/html");
                     //lines added later
                     //client.println("Connection: close");  // the connection will be closed after completion of the response
-                    client.println("Refresh: 5");  // refresh the page automatically every 5 sec
+                    client.println("Refresh: 1");  // refresh the page automatically every 5 sec
                     client.println("<!DOCTYPE HTML>");
                     client.println();
 
