@@ -17,10 +17,9 @@ class InstructionDecoder{
             if(instruction.compareTo("")){
                 Serial.print("DATA RECIEVED: "); Serial.println(instruction);
                 int inputLenght = instruction.length();
-                
-                Serial.print("input debug lenght: ");
-                Serial.println(inputLenght);
-                inputLenght++;
+                char instr[] = instruction. ;
+                char * split = strtok(instr,"-");
+                //inputLenght++;
                 int comandRead = 0; //indicates which position has to be set
                 String analyzed = "";
                 
