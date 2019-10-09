@@ -15,102 +15,105 @@
 
 class WiFiComunication{
     private:
-    
-    String readString = "";
+        
+        
+        #include "HtmlPage.h"
+        const char* PARAM_INPUT_1 = "input1";
+        String readString = "";
 
-    void clientConnected(){
-        // compare the previous status to the current status
-        if (status != WiFi.status()) {
-            // it has changed update the variable
-            status = WiFi.status();
+        void clientConnected(){
+            // compare the previous status to the current status
+            if (status != WiFi.status()) {
+                // it has changed update the variable
+                status = WiFi.status();
 
-            if (status == WL_AP_CONNECTED) {
-            byte remoteMac[6];
+                if (status == WL_AP_CONNECTED) {
+                byte remoteMac[6];
 
-            // a device has connected to the AP
-            Serial.print("Device connected to AP, MAC address: ");
-            WiFi.APClientMacAddress(remoteMac);
-            printMacAddress(remoteMac);
-            } else {
-            // a device has disconnected from the AP, and we are back in listening mode
-            Serial.println("Device disconnected from AP");
+                // a device has connected to the AP
+                Serial.print("Device connected to AP, MAC address: ");
+                WiFi.APClientMacAddress(remoteMac);
+                printMacAddress(remoteMac);
+                } else {
+                // a device has disconnected from the AP, and we are back in listening mode
+                Serial.println("Device disconnected from AP");
+                }
             }
         }
-    }
 
-    void printWiFiStatus() {
-        // print the SSID of the network you're attached to:
-        Serial.print("SSID: ");
-        Serial.println(WiFi.SSID());
+        void printWiFiStatus() {
+            // print the SSID of the network you're attached to:
+            Serial.print("SSID: ");
+            Serial.println(WiFi.SSID());
 
-        // print your WiFi shield's IP address:
-        IPAddress ip = WiFi.localIP();
-        Serial.print("IP Address: ");
-        Serial.println(ip);
+            // print your WiFi shield's IP address:
+            IPAddress ip = WiFi.localIP();
+            Serial.print("IP Address: ");
+            Serial.println(ip);
 
-        // print the received signal strength:
-        long rssi = WiFi.RSSI();
-        Serial.print("signal strength (RSSI):");
-        Serial.print(rssi);
-        Serial.println(" dBm");
-        // print where to go in a browser:
-        Serial.print("To see this page in action, open a browser to http://");
-        Serial.println(ip);
+            // print the received signal strength:
+            long rssi = WiFi.RSSI();
+            Serial.print("signal strength (RSSI):");
+            Serial.print(rssi);
+            Serial.println(" dBm");
+            // print where to go in a browser:
+            Serial.print("To see this page in action, open a browser to http://");
+            Serial.println(ip);
 
-    }
-
-    //set of arduino base function to connect to a network
-    void printWiFiData() {
-        // print your WiFi shield's IP address:
-        IPAddress ip = WiFi.localIP();
-        Serial.print("IP Address: ");
-        Serial.println(ip);
-        Serial.println(ip);
-
-        // print your MAC address:
-        byte mac[6];
-        WiFi.macAddress(mac);
-        Serial.print("MAC address: ");
-        printMacAddress(mac);
-
-    }
-
-    void printCurrentNet() {
-        // print the SSID of the network you're attached to:
-        Serial.print("SSID: ");
-        Serial.println(WiFi.SSID());
-
-        // print the MAC address of the router you're attached to:
-        byte bssid[6];
-        WiFi.BSSID(bssid);
-        Serial.print("BSSID: ");
-        printMacAddress(bssid);
-
-        // print the received signal strength:
-        long rssi = WiFi.RSSI();
-        Serial.print("signal strength (RSSI):");
-        Serial.println(rssi);
-
-        // print the encryption type:
-        byte encryption = WiFi.encryptionType();
-        Serial.print("Encryption Type:");
-        Serial.println(encryption, HEX);
-        Serial.println();
-    }
-
-    void printMacAddress(byte mac[]) {
-        for (int i = 5; i >= 0; i--) {
-            if (mac[i] < 16) {
-            Serial.print("0");
-            }
-            Serial.print(mac[i], HEX);
-            if (i > 0) {
-            Serial.print(":");
-            }
         }
-        Serial.println();
-    }
-    
+
+        //set of arduino base function to connect to a network
+        void printWiFiData() {
+            // print your WiFi shield's IP address:
+            IPAddress ip = WiFi.localIP();
+            Serial.print("IP Address: ");
+            Serial.println(ip);
+            Serial.println(ip);
+
+            // print your MAC address:
+            byte mac[6];
+            WiFi.macAddress(mac);
+            Serial.print("MAC address: ");
+            printMacAddress(mac);
+
+        }
+
+        void printCurrentNet() {
+            // print the SSID of the network you're attached to:
+            Serial.print("SSID: ");
+            Serial.println(WiFi.SSID());
+
+            // print the MAC address of the router you're attached to:
+            byte bssid[6];
+            WiFi.BSSID(bssid);
+            Serial.print("BSSID: ");
+            printMacAddress(bssid);
+
+            // print the received signal strength:
+            long rssi = WiFi.RSSI();
+            Serial.print("signal strength (RSSI):");
+            Serial.println(rssi);
+
+            // print the encryption type:
+            byte encryption = WiFi.encryptionType();
+            Serial.print("Encryption Type:");
+            Serial.println(encryption, HEX);
+            Serial.println();
+        }
+
+        void printMacAddress(byte mac[]) {
+            for (int i = 5; i >= 0; i--) {
+                if (mac[i] < 16) {
+                Serial.print("0");
+                }
+                Serial.print(mac[i], HEX);
+                if (i > 0) {
+                Serial.print(":");
+                }
+            }
+            Serial.println();
+        }
+        
     public:
 
         /**
@@ -155,13 +158,18 @@ class WiFiComunication{
 
                         client.println("<H1>HTML form GET example</H1>");
 
+                        client.println("The position format must be Zheight-Inclination-Rotation");
+                        client.println("In form:[mm]-[Degrees]-[Degrees]");
+
                         client.println("<FORM ACTION='/' method=get >"); //uses IP/port of web page
 
-                        client.println("Pin 5 'on5' or 'off5': <INPUT TYPE=TEXT NAME='LED' VALUE='' SIZE='25' MAXLENGTH='50'><BR>");
+                        client.println("New position to set: <INPUT TYPE=TEXT NAME='input1' VALUE='' ><BR>"); //cutted SIZE='25' MAXLENGTH='50'
 
-                        client.println("<INPUT TYPE=SUBMIT NAME='submit' VALUE='Change Pin 5!'>");
+                        client.println("<INPUT TYPE=SUBMIT NAME='Submit' VALUE='Set position'>");
 
                         client.println("</FORM>");
+
+ 
 
                         // output the value of each analog input pin
                         client.println(messageOut);
