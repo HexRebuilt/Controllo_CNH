@@ -169,7 +169,10 @@ class WiFiComunication{
 
                         client.println("</FORM>");
 
- 
+                        Serial.println(readString);
+                        //http//.../?NOMEPARAMETRO=VALORE&ALTROPARAM=VALORE2
+                        //ù
+                        // GET /?NOMEPARAMETRO=VALORE&ALTROPARAM=VALORE2 HTTP/1.1
 
                         // output the value of each analog input pin
                         client.println(messageOut);
