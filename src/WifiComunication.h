@@ -198,7 +198,7 @@ class WiFiComunication{
                         client.println("</HEAD>");
                         client.println("<BODY>");
 
-                        client.println("<H1>HTML form GET example</H1>");
+                        client.println("<H1>CNH Control Panel</H1>");
 
                         client.println("The position format must be Zheight-Inclination-Rotation");
                         client.println("\nIn form:[mm]-[Degrees]-[Degrees]");
