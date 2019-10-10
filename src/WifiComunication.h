@@ -16,10 +16,52 @@
 class WiFiComunication{
     private:
         
-        
-        #include "HtmlPage.h"
-        const char* PARAM_INPUT_1 = "input1";
+        const char* PARAM_INPUT_1 = "fromWeb";
         String readString = "";
+        String readedposition = ""; 
+        
+        /**
+         * funciton that takes the string from the get method and extrapolate the characters needed
+         * INPUT STRING FORMAT:
+         *      "DATA RECIEVED: GET /?fromWeb=45-9-6&Submit=Set+position HTTP/1.1
+                 Host: 192.168.0.24"
+            so this function remooves everything that's not userfull to the instruction
+         * */
+        void analyzeString(String fromWeb){
+            if(fromWeb.indexOf("DATA RECIEVED: GET")){
+                //Serial.println("DEBUG");
+                //Serial.println(fromWeb);
+
+                boolean begin = false;
+                for (int i = 0; i < fromWeb.length(); i++)
+                {
+                    //when i found the "&" means that i have finished the acquisition
+                    if (fromWeb.charAt(i) == '&')
+                    {
+                        begin = false;
+                        return;
+                    }
+
+                    //saving the characters
+                    if (begin)
+                    {
+                        char c = fromWeb.charAt(i);
+                        //Serial.println(c);
+                        readedposition += c;
+                        //analyzeString += tmp;
+                    }
+                    
+
+                    //looking for the first '=' to start acquiring the stirng
+                    if (fromWeb.charAt(i) == '='){
+                        begin = true; //means that from the next character i need to save it
+                    }
+                }
+                
+                        
+
+            }
+        }
 
         void clientConnected(){
             // compare the previous status to the current status
@@ -159,17 +201,19 @@ class WiFiComunication{
                         client.println("<H1>HTML form GET example</H1>");
 
                         client.println("The position format must be Zheight-Inclination-Rotation");
-                        client.println("In form:[mm]-[Degrees]-[Degrees]");
+                        client.println("\nIn form:[mm]-[Degrees]-[Degrees]");
 
                         client.println("<FORM ACTION='/' method=get >"); //uses IP/port of web page
 
-                        client.println("New position to set: <INPUT TYPE=TEXT NAME='input1' VALUE='' ><BR>"); //cutted SIZE='25' MAXLENGTH='50'
+                        client.println("New position to set: <INPUT TYPE=TEXT NAME='fromWeb' VALUE='' ><BR>"); //cutted SIZE='25' MAXLENGTH='50'
 
                         client.println("<INPUT TYPE=SUBMIT NAME='Submit' VALUE='Set position'>");
 
                         client.println("</FORM>");
 
-                        Serial.println(readString);
+                        analyzeString(readString);
+
+
                         //http//.../?NOMEPARAMETRO=VALORE&ALTROPARAM=VALORE2
                         //ù
                         // GET /?NOMEPARAMETRO=VALORE&ALTROPARAM=VALORE2 HTTP/1.1
@@ -248,11 +292,11 @@ class WiFiComunication{
         }
             
         String getDataIn(){
-            Serial.println(readString);
-            String tmp = readString;
+            //Serial.println(readedposition);
+            String tmp = readedposition;
             
             //clearing string for next read
-            readString="";
+            readedposition="";
             return tmp;
         }
 };

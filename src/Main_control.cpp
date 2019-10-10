@@ -47,7 +47,7 @@ void Hardware_Initialization(){
   //Wire.setClock(I2C_SPEED); // sets the I2C clock at 400KHz
 
   // initializza serial port
-  Serial.begin(115200);
+  //Serial.begin(115200);
 
   // SPI initialization
   SPI.begin();
