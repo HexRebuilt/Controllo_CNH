@@ -187,7 +187,7 @@ class WiFiComunication{
                         client.println("Content-Type: text/html");
                         //lines added later
                         //client.println("Connection: close");  // the connection will be closed after completion of the response
-                        client.println("Refresh: 1");  // refresh the page automatically every 5 sec
+                        //client.println("Refresh: 10");  // refresh the page automatically every 5 sec
                         client.println("<!DOCTYPE HTML>");
                         client.println();
 
@@ -201,7 +201,7 @@ class WiFiComunication{
                         client.println("<H1>CNH Control Panel</H1>");
 
                         client.println("The position format must be Zheight-Inclination-Rotation");
-                        client.println("\nIn form:[mm]-[Degrees]-[Degrees]");
+                        client.println("\tIn form:[mm]-[Degrees]-[Degrees]");
 
                         client.println("<FORM ACTION='/' method=get >"); //uses IP/port of web page
 
@@ -297,6 +297,7 @@ class WiFiComunication{
             
             //clearing string for next read
             readedposition="";
+            readString="";
             return tmp;
         }
 };

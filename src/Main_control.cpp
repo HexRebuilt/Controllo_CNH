@@ -48,7 +48,7 @@ void Hardware_Initialization(){
 
   // initializza serial port
   //Serial.begin(115200);
-
+  Serial.begin(9600);
   // SPI initialization
   SPI.begin();
   SPISettings(20000000, MSBFIRST, SPI_MODE3);

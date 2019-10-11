@@ -26,8 +26,9 @@ class Comunication{
     Position read(){
         
         instruction = wifiComunication.getDataIn();
+        //Serial.println(instruction);
         //the serial port is more important then wifi so overwrites its comand
-        if(Serial.available() && instruction.compareTo("") ){
+        if(Serial.available() && !instruction.compareTo("") ){
             instruction = serialPort.getDataIn();
             //instruction.concat("-");//to solve a bug
         }
@@ -43,7 +44,6 @@ class Comunication{
 
     void startup(Position initialPosition){
         readed = initialPosition;
-        Serial.begin(19200);
         wifiComunication.startup();
     }             
 };
