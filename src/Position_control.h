@@ -9,7 +9,9 @@
 class PositionControl {
   public:
     String toStringCurrentPosition(){
-      return current.toStringPosition();
+      String tmp = "Current position: " + current.toStringPosition()
+                    +"\t-----\nDesired position: "+desired.toStringPosition();
+      return tmp;
     }
     /**
      * Function that form the main gets the new desired position and sets it

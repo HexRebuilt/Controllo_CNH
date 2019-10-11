@@ -42,9 +42,6 @@ void Hardware_Initialization(){
   pinMode(ROTATION_MOTOR_PIN,OUTPUT);
 
 
-  //initialize i2c. Need to call only ONCE
-  //Wire.begin(); // begins and sets the I2C clock at 100KHz
-  //Wire.setClock(I2C_SPEED); // sets the I2C clock at 400KHz
 
   // initializza serial port
   //Serial.begin(115200);
