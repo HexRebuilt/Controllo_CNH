@@ -7,14 +7,15 @@
 #include "Defines.h"
 #include "Positions.h"
 
+//those files requires position.h
+#include "Safety.h"
+#include "Motors.h"
+//position control uses the previous library so must be included afterwards
+#include "Position_control.h"
+ 
+//comunication libraries
 #include "InstructionDecoder.h"
 #include "SerialComunication.h"
 #include "Secrets.h"
 #include "WifiComunication.h"
 #include "Comunication.h"
-//those files requires position.h
-
-#include "Safety.h"
-#include "Motors.h"
-//position control uses the previous library so must be included afterwards
-#include "Position_control.h" 

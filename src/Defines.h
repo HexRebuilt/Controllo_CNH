@@ -5,6 +5,9 @@
  // PURPOSE      : Global simbols and constants definition
  // AUTHOR       : Simone Andreini
  //------------------------------------------------------------------------------
+
+
+
 //cpu constant
 #define CPU_HZ 48000000
 #define TIMER_PRESCALER_DIV 1024

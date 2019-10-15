@@ -24,7 +24,7 @@ void Data_Initialization(){
   // initialization of working data
   
 
- //at the startup i want the platform to be in the ground
+  //at the startup i want the platform to be in the ground
   newPosition.setZ(Z_MINLENGHT);
   newPosition.setInclination(INCLINATION_MIN);
   newPosition.setRotation(ROT_MIN);
@@ -41,16 +41,15 @@ void Hardware_Initialization(){
   pinMode(INCLINE_MOTOR_PIN,OUTPUT);
   pinMode(ROTATION_MOTOR_PIN,OUTPUT);
 
-
-
-  // initializza serial port
-  //Serial.begin(115200);
-  Serial.begin(9600);
   // SPI initialization
   SPI.begin();
   SPISettings(20000000, MSBFIRST, SPI_MODE3);
 
+  // initializza serial port
+  Serial.begin(19200);
+  //Serial.begin(9600);
   
+
 }
 
 //TODO: remove the while loop when used without the serial port attached
@@ -60,8 +59,8 @@ void setup() {
 
     analogReadResolution(PRECISION);
     Data_Initialization();
-    comunication.startup(newPosition);
     Hardware_Initialization();
+    comunication.startup(newPosition);
     delay(2000);
 
     //at the startup the platform goes to the 0 level
