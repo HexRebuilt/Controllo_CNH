@@ -28,9 +28,11 @@
 #define ROTATION_PIN    A3  //FIRE PIN
 
 //motor pins                    //from the old board
-#define INCLINE_MOTOR_PIN   10  //cs x
-#define ROTATION_MOTOR_PIN  11  //cs y
-#define Z_MOTOR_PIN         12  //cs z
+#define INCLINE_MOTOR_PIN   12  
+#define ROTATION_MOTOR_PIN  11  
+#define Z_UP_MOTOR_PIN      10  //IN1 relay
+#define Z_DOWN_MOTOR_PIN    9   //IN2 relay
+
 
 //palleto position constant
 #define Z_NO_INCLINATION 500 //mm from the ground
@@ -57,6 +59,9 @@
 
 //analog sensors constant
 #define WIRE_POT_K 10 //10kohm potentiometer
+
+//realy time constant
+#define REALY_INTERVAL  500 //ms
 
 
 

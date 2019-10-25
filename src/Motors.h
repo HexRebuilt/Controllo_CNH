@@ -13,19 +13,39 @@
 class Motors{
     public:
         /**
-         * Sets of 3 function in charge of moving the motor
-         * */        
+         * function that modify the height of the platform by using 2 relays
+         * 
+         * INPUT: it's a variation of the position that can be <0,>0
+         * */       
         void move_z_axis(int delta){
             //Serial.println("Moving Z");
-            setPotentiometer(Z_MOTOR_PIN, step_value(delta));
-            
+            //setPotentiometer(Z_MOTOR_PIN, step_value(delta));
+            if (delta >0){ //i have to increase the height
+                digitalWrite(Z_UP_MOTOR_PIN, HIGH);
+                delay(REALY_INTERVAL);
+                digitalWrite(Z_UP_MOTOR_PIN,LOW);
+            }
+            else{ //i have to reduce the heigh
+                digitalWrite(Z_DOWN_MOTOR_PIN, HIGH);
+                delay(REALY_INTERVAL);
+                digitalWrite(Z_DOWN_MOTOR_PIN,LOW);
+            }        
         }
 
+        /**
+         * function that modify the inclination of the platform
+         * 
+         * INPUT: it's a variation of the position that can be <0,>0
+         * */
         void move_inclination(int delta){
             //Serial.println("Moving inclination");
             setPotentiometer(INCLINE_MOTOR_PIN, step_value(delta));
         }
-
+        /**
+         * function that modify the rotation of the platform
+         * 
+         * INPUT: it's a variation of the position that can be <0,>0
+         * */
         void move_rotation(int delta){
             //Serial.println("Moving rotation");
             setPotentiometer(ROTATION_MOTOR_PIN, step_value(delta));
