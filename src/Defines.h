@@ -28,10 +28,10 @@
 #define ROTATION_PIN    A3  //FIRE PIN
 
 //motor pins                    //from the old board
-#define INCLINE_MOTOR_PIN   12  
+#define Z_MOTOR_PIN   12  
 #define ROTATION_MOTOR_PIN  11  
-#define Z_UP_MOTOR_PIN      10  //IN1 relay
-#define Z_DOWN_MOTOR_PIN    9   //IN2 relay
+#define INCLINE_UP_MOTOR_PIN      10  //IN1 relay
+#define INCLINE_DOWN_MOTOR_PIN    9   //IN2 relay
 
 
 //palleto position constant

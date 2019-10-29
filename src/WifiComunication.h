@@ -33,7 +33,7 @@ class WiFiComunication{
                 //Serial.println(fromWeb);
 
                 boolean begin = false;
-                for (int i = 0; i < fromWeb.length(); i++)
+                for (int i = 0; i < (int)fromWeb.length(); i++)
                 {
                     //when i found the "&" means that i have finished the acquisition
                     if (fromWeb.charAt(i) == '&')

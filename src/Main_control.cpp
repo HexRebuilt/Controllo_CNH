@@ -37,9 +37,9 @@ void Hardware_Initialization(){
   pinMode(Z_AXIS_PIN,INPUT);
   pinMode(ROTATION_PIN,INPUT);
   pinMode(INCLINATION_PIN,INPUT);
-  pinMode(Z_UP_MOTOR_PIN,OUTPUT);
-  pinMode(Z_DOWN_MOTOR_PIN,OUTPUT);
-  pinMode(INCLINE_MOTOR_PIN,OUTPUT);
+  pinMode(INCLINE_UP_MOTOR_PIN,OUTPUT);
+  pinMode(INCLINE_DOWN_MOTOR_PIN,OUTPUT);
+  pinMode(Z_MOTOR_PIN,OUTPUT);
   pinMode(ROTATION_MOTOR_PIN,OUTPUT);
 
   // SPI initialization
