@@ -35,7 +35,19 @@ class SafetyController{
 
 
     }
+    /**
+     * Function that recieves a desired position and check if is possible to be reached
+     * it checkes the position but also the sensors
+     * INPUT: desired positin
+     * OUTPUT: a boolean that allows or block the movement
+     * */
+    boolean isSafe(Position desired){
+        boolean tmp = isReachable(desired);
 
+
+
+        return true;
+    }
 
     private:
         boolean newPallet = true;
@@ -47,10 +59,33 @@ class SafetyController{
          
 
 
-        //it needs to check if the position send won't violate any safety standard
+        /**
+         * it check if the position send won't violate any safety standards
+         * INPUT: the desired position
+         * OUTPUT: a boolean that tells the controller if the position is reachable
+         * */
+        
         boolean isReachable(Position desired){
             
-            //TODO adding the safety logic
+            boolean zOutOfRange = desired.getZ() > Z_MAXLENGHT || desired.getZ() < Z_MINLENGHT ;
+            if(zOutOfRange){
+                return false;
+            }
+
+            boolean inclineOutOfRange = desired.getInclination() > INCLINATION_MAX ||desired.getInclination() > INCLINATION_MIN ;
+            if (inclineOutOfRange)
+            {
+                return false;
+            }
+
+            //the rotation cannot be out of range due to the fact that the encord has an infinite type of rotation
+
+            boolean onlyZ = desired.getRotation()> ROT_MIN || desired.getInclination() > INCLINATION_MIN;
+            if (desired.getZ() > Z_NO_INCLINATION && onlyZ ) //means that i cannot incline and i want to
+            {
+                return false;
+            }
+
             return true;
         }
 
