@@ -41,6 +41,8 @@ class Motors{
                 down = true;
                 up = false;
             }
+
+            //this section is used in order to stop the platform after reaching the set point
             if (delta == 0){
                 //check what direction i'm mooving
                 if (up)

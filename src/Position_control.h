@@ -49,15 +49,15 @@ class PositionControl {
         int delta; //difference from where i am and where i need to go
         switch(i){
           case 0: //z axis
-          delta = desired.getZ() - current.getZ();
+          delta = getDifference(desired.getZ(), current.getZ(), Z_TOLLERANCE);
           motors.move_z_axis(delta);
           break;
           case 1: //inclination axis
-          delta = desired.getInclination() - current.getInclination();
+          delta = getDifference(desired.getInclination(), current.getInclination(),INCLINATION_TOLLERANCE);
           motors.move_inclination(delta);
           break;
           case 2: //rotation axis
-          delta = desired.getRotation() - current.getRotation();
+          delta = getDifference(desired.getRotation(), current.getRotation(), ROT_TOLLERANCE);
           motors.move_rotation(delta);
           break;
         }
@@ -132,23 +132,23 @@ class PositionControl {
 
     /**
      * function that determine if a movement along an axis is required
-     * input: the current value, the desired one and the tollerance of the axis
-     * output: a boolean that if true means that the platform needs to move. if false
-     * doesn't need to
+     * 
+     * INPUT: the desired position , the input difference in position and the tollerance of the axis
+     * OUTPUT: an integer that, if the tollerance is respected is 0, otherwise is 
+     *        the  delta value
      * */
 
-    boolean need_to_move(int current, int desired, int tollerance){
-      int tmp = current - desired; //getting the difference
-      tmp = abs(tmp); //getting the absolute difference between the 2
+    int getDifference(int desiredPosition, int currentPosition, int tollerance){
+      int delta = abs(desiredPosition - currentPosition); //getting the absolute difference between the 2
       //Serial.println(tmp);
-      if (tmp > tollerance){
+      if (delta > tollerance){
         //Serial.println("NEED TO MOVE");
-        return true;
+        return delta;
       }
       else
       {
         //Serial.println("NO NEED TO MOVE");
-        return false;
+        return 0;
       }
     }
 

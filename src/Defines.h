@@ -37,6 +37,8 @@
 //palleto position constant
 #define Z_NO_INCLINATION 500 //mm from the ground
 #define Z_GROUND         50 //mm under those it will be prevented to inclinate or rotate 
+#define Z_PINS           70 //mm used to connect the pins
+#define Z_Switch         70 //mm
 
 
 //Z axis constants
