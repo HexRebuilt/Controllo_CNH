@@ -39,13 +39,19 @@ class SafetyController{
      * Function that recieves a desired position and check if is possible to be reached
      * it checkes the position but also the sensors
      * INPUT: desired positin
-     * OUTPUT: a boolean that allows or block the movement
+     * OUTPUT: a boolean that allows or blocks the movement of the platform
      * */
     boolean isSafe(Position desired){
+        if (isNewPallet(desired))
+        {
+            return true;
+        }
+        
         boolean tmp = isReachable(desired);
+        
 
 
-
+        //return tmp;
         return true;
     }
 

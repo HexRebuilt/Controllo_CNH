@@ -8,6 +8,15 @@
 
 class PositionControl {
   public:
+    /**
+     * Function that starts the safety features and set the firts startup position
+     * */
+
+    void startup(Position dataIn){
+      safety.startup();
+      setDesiredPosition(dataIn);
+    }
+
     String toStringCurrentPosition(){
       String tmp = "Current position: " + current.toStringPosition()
                     +"\t-----\nDesired position: "+desired.toStringPosition();
@@ -34,9 +43,6 @@ class PositionControl {
      * the platform won't move
      * 
      * it uses the desired_position in order to determine the direction of movement
-     * 
-     * 
-     * TODO ADDING THE LIMIT LOGIC TO THE MOVEMENT
      * */ 
 
     void move_platform(){
