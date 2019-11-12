@@ -43,7 +43,7 @@
 
 //Z axis constants
 #define Z_MAXLENGHT 200 //in mm
-#define Z_MINLENGHT 46   //in mm
+#define Z_MINLENGHT 181//46   //in mm
 #define Z_INVERSE_LOGIC true //if the max lenght is at 0v, minimum at 3.3v
 #define Z_TOLLERANCE 5 //10mm of tollerance
 
@@ -63,7 +63,7 @@
 #define WIRE_POT_K 10 //10kohm potentiometer
 
 //realy time constant
-#define REALY_INTERVAL  500 //ms
+#define REALY_INTERVAL  5000 //ms
 
 
 

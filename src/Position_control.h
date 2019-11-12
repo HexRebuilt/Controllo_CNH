@@ -146,9 +146,9 @@ class PositionControl {
 
     int getDifference(int desiredPosition, int currentPosition, int tollerance){
       int delta = abs(desiredPosition - currentPosition); //getting the absolute difference between the 2
-      //Serial.println(tmp);
       if (delta > tollerance){
         //Serial.println("NEED TO MOVE");
+        delta = desiredPosition - currentPosition;
         return delta;
       }
       else

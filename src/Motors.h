@@ -1,6 +1,8 @@
 /**
  * File that provides control over the motors by modifying a digital potentiometer
  * probably it will be a mpc4131 digital potentiometer which has 129 steps
+ * 
+ * the relay has to work with the low-com mode otherwise they won't link the pin 1&2 of the AZ2 to GND
  * */
 
 #include <Arduino.h>
@@ -29,47 +31,27 @@ class Motors{
          * INPUT: it's a variation of the position that can be <0,>0
          * */
         void move_inclination(int delta){
-
+            Serial.println(delta);
             //Serial.println("Moving inclination");
-            if (delta >0){ //i have to increase the height
-                switchRealy(INCLINE_UP_MOTOR_PIN);
-                up = true;
-                down = false;
+            if (delta >0){ //i have to increase the inclination
+                //Serial.println("Increasing inclination");
+                digitalWrite(INCLINE_UP_MOTOR_PIN, LOW);
+                digitalWrite(INCLINE_DOWN_MOTOR_PIN,HIGH);
+
             }
-            else{ //i have to reduce the heigh
-                switchRealy(INCLINE_DOWN_MOTOR_PIN);
-                down = true;
-                up = false;
+            else{ //i have to reduce the inclination
+                //Serial.println("Reducing inclination");
+                digitalWrite(INCLINE_UP_MOTOR_PIN, HIGH);
+                digitalWrite(INCLINE_DOWN_MOTOR_PIN,LOW);
             }
 
             //this section is used in order to stop the platform after reaching the set point
             if (delta == 0){
-                //check what direction i'm mooving
-                if (up)
-                {
-                    //i need to stop mooving upwards
-                    switchRealy(INCLINE_UP_MOTOR_PIN);
-                    up = false;
-                }
-                else if (down)
-                {
-                    //i need to stop moving downards
-                    switchRealy(INCLINE_DOWN_MOTOR_PIN);
-                    down = false;
-                }
+                digitalWrite(INCLINE_UP_MOTOR_PIN, HIGH);
+                digitalWrite(INCLINE_DOWN_MOTOR_PIN,HIGH);
             }   
         }
 
-        /**
-         * function to change the state of the relay
-         * 
-         * INPUT: is the pin number
-         * */
-        void switchRealy(int pinNo){
-            digitalWrite(pinNo, HIGH);
-            delay(REALY_INTERVAL);
-            digitalWrite(pinNo,LOW);
-        }
 
 
         /**
@@ -84,7 +66,28 @@ class Motors{
 
 
     private:
-        boolean up,down;
+
+        /**
+         * Function used to change the state of one relay module
+         * 
+         * INPUT: is the pinNo. of the relay
+         * */
+        void relayHighToLow(int pin){
+                digitalWrite(pin, HIGH);
+                delay(REALY_INTERVAL);
+                digitalWrite(pin,LOW);
+        }
+        
+        /**
+         * Function used to change the state of one relay module
+         * 
+         * INPUT: is the pinNo. of the relay
+         * */
+        void relayLowToHigh(int pin){
+                digitalWrite(pin, LOW);
+                delay(REALY_INTERVAL);
+                digitalWrite(pin,HIGH);
+        }
 
         /**
          * function that, given an input difference in position gives back a step value
