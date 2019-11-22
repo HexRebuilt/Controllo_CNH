@@ -6,7 +6,7 @@
  * */
 
 #include <Arduino.h>
-#include "Defines.h"
+//#include "Defines.h"
 
 class SafetyController{
     
@@ -44,16 +44,37 @@ class SafetyController{
     boolean isSafe(Position desired){
         if (isNewPallet(desired))
         {
-            return true;
+            return true; //means that i have to ignore some safety feature
         }
         
-        boolean tmp = isReachable(desired);
+        //then i check if i can reach that position
+        boolean isOk = isReachable(desired);
         
 
 
-        //return tmp;
+        //return isOk;
         return true;
     }
+
+    /**
+     * Function that controls the LED on and off behaviour
+     * INPUT: is the new value of the leds if the movement is accouring
+     *          or is not safe to move
+     * */
+    void setLed(boolean light){
+        lights = light;
+        if (lights)
+        {//if true means green
+            digitalWrite(LED_PIN,HIGH);
+            digitalWrite(LED_BUILTIN,HIGH);
+        }
+        else{
+            digitalWrite(LED_PIN,LOW);
+            digitalWrite(LED_BUILTIN,LOW);
+        }
+        
+    }
+
 
     private:
         boolean newPallet = true;

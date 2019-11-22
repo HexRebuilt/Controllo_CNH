@@ -47,28 +47,43 @@ class PositionControl {
 
     void move_platform(){
       read_ALL();
+      //--------------------------------
+      //i need to ADD THE SAFETY FEATURE
+      //--------------------------------
+      if(safety.isSafe(desired)){
 
-      int axis = 3;
-      //checking if i need to move along each axis 
-      for (int i = 0; i < axis; i++)
-      {
-        int delta; //difference from where i am and where i need to go
-        switch(i){
-          case 0: //z axis
-          delta = getDifference(desired.getZ(), current.getZ(), Z_TOLLERANCE);
-          motors.move_z_axis(delta);
-          break;
-          case 1: //inclination axis
-          delta = getDifference(desired.getInclination(), current.getInclination(),INCLINATION_TOLLERANCE);
-          motors.move_inclination(delta);
-          break;
-          case 2: //rotation axis
-          delta = getDifference(desired.getRotation(), current.getRotation(), ROT_TOLLERANCE);
-          motors.move_rotation(delta);
-          break;
+        int axis = 3;
+        //checking if i need to move along each axis 
+        for (int i = 0; i < axis; i++)
+        {
+          int delta; //difference from where i am and where i need to go
+          switch(i){
+            case 0: //z axis
+            delta = getDifference(desired.getZ(), current.getZ(), Z_TOLLERANCE);
+            moving(delta);
+            motors.move_z_axis(delta);
+            break;
+            case 1: //inclination axis
+            delta = getDifference(desired.getInclination(), current.getInclination(),INCLINATION_TOLLERANCE);
+            moving(delta);
+            motors.move_inclination(delta);
+            break;
+            case 2: //rotation axis
+            delta = getDifference(desired.getRotation(), current.getRotation(), ROT_TOLLERANCE);
+            moving(delta);
+            motors.move_rotation(delta);
+            break;
+          }
         }
       }
       
+      else{
+        //it's not safe. i need to stop every axis
+        Serial.println("It's not safe to move!");
+        motors.move_inclination(0);
+        motors.move_rotation(0);
+        motors.move_z_axis(0);
+      }
     }
 
 
@@ -158,5 +173,22 @@ class PositionControl {
       }
     }
 
+    /**
+     * Function that tell the safety controller to turn on or off the led
+     * INPUT: delta is the difference from the desired and current position, inlcuding the tollerance
+     * */
+
+    void moving(int delta){
+      if (delta == 0) 
+      {
+        //means that the platform is not mooving
+        safety.setLed(true);
+      }
+      else 
+      {
+        safety.setLed(false);
+      }
+      
+    }
 
 };

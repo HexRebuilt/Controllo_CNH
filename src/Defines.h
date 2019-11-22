@@ -33,6 +33,9 @@
 #define INCLINE_UP_MOTOR_PIN      10  //IN1 relay
 #define INCLINE_DOWN_MOTOR_PIN    9   //IN2 relay
 
+//safety pins
+#define LED_PIN 8 //to be defined
+
 
 //palleto position constant
 #define Z_NO_INCLINATION 500 //mm from the ground
