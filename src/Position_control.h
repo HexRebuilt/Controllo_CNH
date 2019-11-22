@@ -3,7 +3,7 @@
  * 
  * */
 
-#include <Arduino.h>
+//#include <Arduino.h>
 
 
 class PositionControl {
@@ -76,7 +76,7 @@ class PositionControl {
           }
         }
       }
-      
+
       else{
         //it's not safe. i need to stop every axis
         Serial.println("It's not safe to move!");

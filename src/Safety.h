@@ -50,10 +50,21 @@ class SafetyController{
         //then i check if i can reach that position
         boolean isOk = isReachable(desired);
         
+        //then it checks if the area around is safe
+        if(isOk){
+            isOk= true;
+            //TODO adding the ultrasonic sensors
+            //isOK = checkSurroundings();
+        }
+        else
+        {
+            //means that i cannot move the platform
+            //due to reachability constraints
+            ledBlink();
+        }
 
-
-        //return isOk;
-        return true;
+        return isOk;
+        //return true;
     }
 
     /**
@@ -84,7 +95,13 @@ class SafetyController{
         boolean lights = true; //true means grean and false means red light
         Position ground, connectPins, switches;
          
-
+        void ledBlink(){
+            setLed(false);
+            delay(500);
+            setLed(true);
+            delay(500);
+            setLed(false);
+        }
 
         /**
          * it check if the position send won't violate any safety standards
