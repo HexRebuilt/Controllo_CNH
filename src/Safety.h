@@ -5,7 +5,7 @@
  * 
  * */
 
-#include <Arduino.h>
+//#include <Arduino.h>
 //#include "Defines.h"
 
 class SafetyController{
@@ -42,8 +42,7 @@ class SafetyController{
      * OUTPUT: a boolean that allows or blocks the movement of the platform
      * */
     boolean isSafe(Position desired){
-        if (isNewPallet(desired))
-        {
+        if (isNewPallet(desired)){
             return true; //means that i have to ignore some safety feature
         }
         
@@ -52,13 +51,11 @@ class SafetyController{
         
         //then it checks if the area around is safe
         if(isOk){
-            //isOk= true;
             //TODO adding the ultrasonic sensors
             unsigned int distance = ultrasonicSensor.getSmallestDistance();
             isOk = isSafeToMove(distance);
         }
-        else
-        {
+        else{
             //means that i cannot move the platform
             //due to reachability constraints
             ledBlink();
