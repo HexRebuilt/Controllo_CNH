@@ -33,7 +33,7 @@ class SafetyController{
         switches.setRotation(180);
         switches.setInclination(0);
 
-
+        ultrasonicSensor.setup();
     }
     /**
      * Function that recieves a desired position and check if is possible to be reached
@@ -52,9 +52,10 @@ class SafetyController{
         
         //then it checks if the area around is safe
         if(isOk){
-            isOk= true;
+            //isOk= true;
             //TODO adding the ultrasonic sensors
-            //isOK = checkSurroundings();
+            unsigned int distance = ultrasonicSensor.getSmallestDistance();
+            isOk = isSafeToMove(distance);
         }
         else
         {
@@ -72,8 +73,8 @@ class SafetyController{
      * INPUT: is the new value of the leds if the movement is accouring
      *          or is not safe to move
      * */
-    void setLed(boolean light){
-        lights = light;
+    void setLed(boolean toSetLight){
+        lights = toSetLight;
         if (lights)
         {//if true means green
             digitalWrite(LED_PIN,HIGH);
@@ -94,12 +95,14 @@ class SafetyController{
         boolean areaFree = false;
         boolean lights = true; //true means grean and false means red light
         Position ground, connectPins, switches;
+
+        UltrasonicSensor ultrasonicSensor;
          
         void ledBlink(){
             setLed(false);
-            delay(500);
+            delay(5000);
             setLed(true);
-            delay(500);
+            delay(5000);
             setLed(false);
         }
 
@@ -160,6 +163,7 @@ class SafetyController{
             if(newPallet == false){
                 return false;
             }
+            return false;
         }
 
         /**
@@ -184,6 +188,20 @@ class SafetyController{
             {
                 return false;
             }
-               
+            return false;
+        }
+
+        /**
+         * Function that compares the minimum distance emasured to the minimum required for safety
+         * */
+        boolean isSafeToMove(unsigned int distance){
+            if (distance > MINIMUM_DISTANCE)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 };

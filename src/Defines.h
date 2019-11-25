@@ -34,7 +34,7 @@
 #define INCLINE_DOWN_MOTOR_PIN    9   //IN2 relay
 
 //safety pins
-#define LED_PIN 8 //to be defined
+#define LED_PIN 13 //to be defined
 
 
 //palleto position constant
@@ -51,14 +51,14 @@
 #define Z_TOLLERANCE 5 //10mm of tollerance
 
 //Rotation axis constants
-#define ROT_MIN 1     //degrees
+#define ROT_MIN 0     //degrees
 #define ROT_MAX 360   //degrees
 #define ROT_INVERSE_LOGIC false //it increase tension with CW rotation
 #define ROT_TOLLERANCE 1 //degrees
 
 //inclination axis constant
-#define INCLINATION_MIN 0 //degrees
-#define INCLINATION_MAX 25 //degrees
+#define INCLINATION_MIN 15//0 //degrees
+#define INCLINATION_MAX 25//25 //degrees
 #define INCLINATION_INVERSE_LOGIC true
 #define INCLINATION_TOLLERANCE 1 //degrees
 
@@ -66,7 +66,11 @@
 #define WIRE_POT_K 10 //10kohm potentiometer
 
 //realy time constant
-#define REALY_INTERVAL  5000 //ms
+#define REALY_INTERVAL  1000 //ms
+
+//ultrasonic sensors constants
+#define NUMBER_OF_SENSORS 3
+#define MINIMUM_DISTANCE 100 //cm
 
 
 

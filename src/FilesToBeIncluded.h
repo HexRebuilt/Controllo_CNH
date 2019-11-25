@@ -8,6 +8,7 @@
 #include "Positions.h"
 
 //those files requires position.h
+#include "UltrasonicSensors.h"
 #include "Safety.h"
 #include "Motors.h"
 //position control uses the previous library so must be included afterwards
