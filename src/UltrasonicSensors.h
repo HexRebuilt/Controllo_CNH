@@ -74,7 +74,7 @@ class UltrasonicSensor{
          * */
         boolean isCheckSumOk(){
             //this variable
-            uint8 check = 0;
+            uint8_t check = 0;
             for (int k = 1; k < 6; k++)
             {
                 Serial.print("Debug checksum: Rx= ");
