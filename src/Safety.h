@@ -6,7 +6,6 @@
  * */
 
 //#include <Arduino.h>
-//#include "Defines.h"
 
 class SafetyController{
     
@@ -43,7 +42,7 @@ class SafetyController{
      * */
     boolean isSafe(Position desired){
         if (isNewPallet(desired)){
-            return true; //means that i have to ignore some safety feature
+            return true; //means that i have to ignore SOME safety feature
         }
         
         //then i check if i can reach that position
@@ -51,9 +50,7 @@ class SafetyController{
         
         //then it checks if the area around is safe
         if(isOk){
-            //TODO adding the ultrasonic sensors
-            unsigned int distance = ultrasonicSensor.getSmallestDistance();
-            isOk = isSafeToMove(distance);
+           isOk = isSafeToMove();
         }
         else{
             //means that i cannot move the platform
@@ -61,28 +58,31 @@ class SafetyController{
             ledBlink();
         }
 
+
         return isOk;
         //return true;
     }
 
+    
     /**
-     * Function that controls the LED on and off behaviour
-     * INPUT: is the new value of the leds if the movement is accouring
-     *          or is not safe to move
+     * Function that turns on or off the led
+     * INPUT: delta is the difference from the desired and current position, inlcuding the tollerance
      * */
-    void setLed(boolean toSetLight){
-        lights = toSetLight;
-        if (lights)
-        {//if true means green
-            digitalWrite(LED_PIN,HIGH);
-            digitalWrite(LED_BUILTIN,HIGH);
-        }
-        else{
-            digitalWrite(LED_PIN,LOW);
-            digitalWrite(LED_BUILTIN,LOW);
-        }
-        
+
+    void moving(int delta){
+      if (delta == 0) 
+      {
+        //means that the platform is not mooving
+        setLed(true);
+      }
+      else 
+      {
+        setLed(false);
+      }
+      
     }
+
+
 
 
     private:
@@ -94,12 +94,34 @@ class SafetyController{
         Position ground, connectPins, switches;
 
         UltrasonicSensor ultrasonicSensor;
-         
+
+        /**
+         * Function that controls the LED on and off behaviour
+         * INPUT: is the new value of the leds if the movement is accouring
+         *          or is not safe to move
+         * */
+        void setLed(boolean toSetLight){
+            lights = toSetLight;
+            if (lights)
+            {//if true means green
+                digitalWrite(LED_PIN,HIGH);
+                digitalWrite(LED_BUILTIN,HIGH);
+            }
+            else{
+                digitalWrite(LED_PIN,LOW);
+                digitalWrite(LED_BUILTIN,LOW);
+            }
+            
+        }
+
+        /**
+         * Funcition that make the led blinks
+         * */        
         void ledBlink(){
             setLed(false);
-            delay(5000);
+            delay(LED_BLINK);
             setLed(true);
-            delay(5000);
+            delay(LED_BLINK);
             setLed(false);
         }
 
@@ -190,9 +212,12 @@ class SafetyController{
 
         /**
          * Function that compares the minimum distance emasured to the minimum required for safety
+         * It uses the ultrasonic sensors
          * */
-        boolean isSafeToMove(unsigned int distance){
-            if (distance > MINIMUM_DISTANCE)
+        boolean isSafeToMove(){
+             //unsigned int distance = ultrasonicSensor.getSmallestDistance();
+            
+            if (ultrasonicSensor.getSmallestDistance() > MINIMUM_DISTANCE)
             {
                 return true;
             }

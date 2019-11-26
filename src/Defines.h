@@ -35,6 +35,7 @@
 
 //safety pins
 #define LED_PIN 13 //to be defined
+#define LED_BLINK 500//ms for blink
 
 
 //palleto position constant
@@ -71,6 +72,7 @@
 //ultrasonic sensors constants
 #define NUMBER_OF_SENSORS 3
 #define MINIMUM_DISTANCE 100 //cm
+#define ULTRASONIC_DELAY 150 //ms
 
 
 

@@ -10,22 +10,23 @@
 // # Pin TX (URM07 V1.0) -> RX1/D0 (Arduino Leonardo)
 
 #include <Arduino.h>
-#include "Defines.h"
+//#include "Defines.h"
 
 class UltrasonicSensor{
 
     private:
         #define MAX_DISTANCE 750
         unsigned char i=0,j=0;
-        unsigned char Rx_DATA[8];
+        unsigned char Rx_DATA[8]; //6 for the message, 1 for the start of the comunication and 1 for the end. tot=8
         unsigned int smallest_distance = MAX_DISTANCE; //750mm is the maximum readable
             
 
 
         /**
          * Distance Measurement Package
-         * 
+         * it's a group of 12 bites
          * FORMAT: {0x55,0xAA,0x(Sensor_number)(Sensor_number),0x00,0x02,0x(Sensor_number)(Sensor_number+1)}
+         * CRC: the last field is the 1 byte checksum
          * */
         unsigned char CMD[NUMBER_OF_SENSORS][6]={
             {0x55,0xAA,0x11,0x00,0x02,0x12}, //first sensor
@@ -38,26 +39,48 @@ class UltrasonicSensor{
          * Function that uses the UART protocol to read the sensors distance
          * */
         void readAllSensors() {
-            unsigned int distance=0;
             for(j=0;j<NUMBER_OF_SENSORS;j++){
                     for(i=0;i<6;i++){
-                    Serial1.write(CMD[j][i]);
-                }
-                delay(150); //Wait returned result
-                i=0;
-                while (Serial1.available()){ //Read Returned Value (This demo is only for reference, no data verification)
-                    Rx_DATA[i++]=(Serial1.read());
-                    distance=((Rx_DATA[5]<<8)|Rx_DATA[6]); //Read distance value
-                    
-                    //TODO:                     
-                    //adding data verification CRC method
-
-                    analyzeDistance(distance);
-                }
-
-                printDistance(distance);
+                        Serial1.write(CMD[j][i]);
+                    }
+                readDataIn();
             }
                 
+        }
+
+        /**
+         * function that performs the reading from the serial1 port with uart protocol.
+         * it uses the global variables given by the manifacturer for this class
+         * */
+        void readDataIn(){
+            unsigned int distance=0;
+            //Read Returned Value
+            while (Serial1.available()){ 
+                Rx_DATA[i++]=(Serial1.read());
+                distance=((Rx_DATA[5]<<8)|Rx_DATA[6]); //Read distance value
+                //TODO:                     
+                //adding data verification 1 byte checksum 
+                
+                Serial.print("DEBUG: i value while reading = ");
+                Serial.println(i);
+                analyzeDistance(distance);
+            }
+            printDistance(distance);
+        }
+
+        /**
+         * funciton that performs a 1 byte checksum on the reading
+         * */
+        boolean isCheckSumOk(uint8 *buff,int i){
+            short dataLenght = i-1;
+            uint8 check = m2m_checksum(buff,dataLenght);
+            
+            if (check == buff[i])
+            {
+                return true;
+            }else{
+                return false;
+            }           
         }
 
         /**

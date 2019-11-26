@@ -60,17 +60,17 @@ class PositionControl {
           switch(i){
             case 0: //z axis
             delta = getDifference(desired.getZ(), current.getZ(), Z_TOLLERANCE);
-            moving(delta);
+            safety.moving(delta);
             motors.move_z_axis(delta);
             break;
             case 1: //inclination axis
             delta = getDifference(desired.getInclination(), current.getInclination(),INCLINATION_TOLLERANCE);
-            moving(delta);
+            safety.moving(delta);
             motors.move_inclination(delta);
             break;
             case 2: //rotation axis
             delta = getDifference(desired.getRotation(), current.getRotation(), ROT_TOLLERANCE);
-            moving(delta);
+            safety.moving(delta);
             motors.move_rotation(delta);
             break;
           }
@@ -173,22 +173,5 @@ class PositionControl {
       }
     }
 
-    /**
-     * Function that tell the safety controller to turn on or off the led
-     * INPUT: delta is the difference from the desired and current position, inlcuding the tollerance
-     * */
-
-    void moving(int delta){
-      if (delta == 0) 
-      {
-        //means that the platform is not mooving
-        safety.setLed(true);
-      }
-      else 
-      {
-        safety.setLed(false);
-      }
-      
-    }
 
 };
