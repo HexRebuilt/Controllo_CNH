@@ -5,7 +5,6 @@
  * 
  * */
 
-//#include <Arduino.h>
 
 class SafetyController{
     
@@ -34,6 +33,7 @@ class SafetyController{
 
         ultrasonicSensor.setup();
     }
+
     /**
      * Function that recieves a desired position and check if is possible to be reached
      * it checkes the position but also the sensors

@@ -9,8 +9,6 @@
 // # Pin RX (URM07 V1.0) -> TX1/D1 (Arduino Leonardo)
 // # Pin TX (URM07 V1.0) -> RX1/D0 (Arduino Leonardo)
 
-#include <Arduino.h>
-//#include "Defines.h"
 
 class UltrasonicSensor{
 
@@ -49,33 +47,47 @@ class UltrasonicSensor{
         }
 
         /**
-         * function that performs the reading from the serial1 port with uart protocol.
+         * Function that performs the reading from the serial1 port with uart protocol.
          * it uses the global variables given by the manifacturer for this class
          * */
         void readDataIn(){
             unsigned int distance=0;
+            boolean checkOk = false;
             //Read Returned Value
             while (Serial1.available()){ 
-                Rx_DATA[i++]=(Serial1.read());
-                distance=((Rx_DATA[5]<<8)|Rx_DATA[6]); //Read distance value
-                //TODO:                     
-                //adding data verification 1 byte checksum 
+                Rx_DATA[i++]= Serial1.read();
+                //Read distance value if not overwritten will give back the previous value
+                distance=( (Rx_DATA[5]<<8) | Rx_DATA[6] ); 
                 
                 Serial.print("DEBUG: i value while reading = ");
                 Serial.println(i);
-                analyzeDistance(distance);
+                
             }
-            printDistance(distance);
+            
+            if(isCheckSumOk()){
+                analyzeDistance(distance);
+                printDistance(distance);
+            }
         }
 
         /**
-         * funciton that performs a 1 byte checksum on the reading
+         * Funciton that performs a 1 byte checksum on the reading
+         * MODE: the 6th data is the checksum value. so is the one that will be compared to the one obtained
+         * NOTE: the Rx_DATA contains also the 0 and 7 value in memory, so they won't be needed to be analyzed
+         *          so the 6th value, but we need to discard the 0th one.
          * */
-        boolean isCheckSumOk(uint8 *buff,int i){
-            short dataLenght = i-1;
-            uint8 check = m2m_checksum(buff,dataLenght);
+        boolean isCheckSumOk(){
+            //this variable
+            uint8 check = 0;
+            for (int k = 1; k < 6; k++)
+            {
+                Serial.print("Debug checksum: Rx= ");
+                Serial.println(Rx_DATA[k]);
+                check = check + Rx_DATA[k];
+            }
             
-            if (check == buff[i])
+
+            if (check == Rx_DATA[6])
             {
                 return true;
             }else{
@@ -114,6 +126,7 @@ class UltrasonicSensor{
          * Function that returns the smallest distance measured from all the sensors
          * */
         int getSmallestDistance(){
+            //the smallest distance has to be reset to the max measureable in order to get the updated minimum
             smallest_distance = MAX_DISTANCE;
             readAllSensors();
             return smallest_distance;
