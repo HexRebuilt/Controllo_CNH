@@ -9,6 +9,7 @@
 // # Pin RX (URM07 V1.0) -> TX1/D1 (Arduino Leonardo)
 // # Pin TX (URM07 V1.0) -> RX1/D0 (Arduino Leonardo)
 
+#include "Arduino.h"
 
 class UltrasonicSensor{
 
@@ -16,8 +17,7 @@ class UltrasonicSensor{
         #define MAX_DISTANCE 750
         unsigned char i=0,j=0;
         unsigned char Rx_DATA[8]; //6 for the message, 1 for the start of the comunication and 1 for the end. tot=8
-        unsigned int smallest_distance = MAX_DISTANCE; //750mm is the maximum readable
-            
+        unsigned int smallest_distance = MAX_DISTANCE; //750mm is the maximum readable    
 
 
         /**
@@ -52,18 +52,14 @@ class UltrasonicSensor{
          * */
         void readDataIn(){
             unsigned int distance=0;
-            boolean checkOk = false;
             //Read Returned Value
             while (Serial1.available()){ 
                 Rx_DATA[i++]= Serial1.read();
                 //Read distance value if not overwritten will give back the previous value
                 distance=( (Rx_DATA[5]<<8) | Rx_DATA[6] ); 
-                
-                Serial.print("DEBUG: i value while reading = ");
-                Serial.println(i);
-                
-            }
-            
+                //Serial.print("DEBUG: i value while reading = ");
+                //Serial.println(i);
+            }            
             if(isCheckSumOk()){
                 analyzeDistance(distance);
                 printDistance(distance);
@@ -85,8 +81,6 @@ class UltrasonicSensor{
                 Serial.println(Rx_DATA[k]);
                 check = check + Rx_DATA[k];
             }
-            
-
             if (check == Rx_DATA[6])
             {
                 return true;

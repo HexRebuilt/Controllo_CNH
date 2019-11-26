@@ -19,6 +19,10 @@ Position newPosition;
 Comunication comunication;
 PositionControl pControl;
 
+long startTime ;                    // start time for stop watch
+long elapsedTime ;                  // elapsed time for stop watch
+int fractional;                     // variable used to store fractional part of time
+
 
 void Data_Initialization(){
   // initialization of working data
@@ -73,13 +77,39 @@ void setup() {
     
 }
 
+
+void timePassed(){
+  elapsedTime =   millis() - startTime;
+
+  Serial.print( (long )(elapsedTime / 1000L));         // divide by 1000 to convert to seconds - then cast to an int to print
+  Serial.print(".");                             // print decimal point
+      
+      // use modulo operator to get fractional part of time
+  fractional = (long)(elapsedTime % 1000L);
+
+  if (fractional == 0)
+      Serial.print("000");      // add three zero's
+    else if (fractional < 10)    // if fractional < 10 the 0 is ignored giving a wrong time, so add the zeros
+      Serial.print("00");       // add two zeros
+    else if (fractional < 100)
+      Serial.print("0");        // add one zero
+  
+  Serial.println(fractional);  // print fractional part of time
+    Serial.println("");
+}
+
 void loop() {
   // put your main code here, to run repeatedly:
+  
+  //get the starting time
+  startTime = millis();
+  
   newPosition = comunication.read();
   pControl.setDesiredPosition(newPosition);
   pControl.move_platform();
   messageOut = pControl.toStringCurrentPosition();
   comunication.write(messageOut);
 
-  delay(500);
+  timePassed();
 }
+
