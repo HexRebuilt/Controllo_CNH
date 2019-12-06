@@ -63,7 +63,7 @@
  * Z axis constants
  * */
 #define Z_MAXLENGHT 200 //in mm
-#define Z_MINLENGHT 181//46   //in mm
+#define Z_MINLENGHT 0//46   //in mm
 #define Z_INVERSE_LOGIC true //if the max lenght is at 0v, minimum at 3.3v
 #define Z_TOLLERANCE 5 //10mm of tollerance
 
@@ -78,15 +78,7 @@
 /**
  * inclination axis constant
  * */
-#define INCLINATION_MIN 15//0 //degrees
+#define INCLINATION_MIN 0 //degrees
 #define INCLINATION_MAX 25//25 //degrees
-#define INCLINATION_INVERSE_LOGIC true
+#define INCLINATION_INVERSE_LOGIC false
 #define INCLINATION_TOLLERANCE 1 //degrees
-
-
-
-
-
-
-
-

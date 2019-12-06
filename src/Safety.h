@@ -30,7 +30,7 @@ class SafetyController{
         switches.setRotation(180);
         switches.setInclination(0);
 
-        ultrasonicSensor.setup();
+        //ultrasonicSensor.setup();
     }
 
     /**
@@ -49,7 +49,8 @@ class SafetyController{
         
         //then it checks if the area around is safe
         if(isOk){
-           isOk = isSafeToMove();
+           //isOk = isSafeToMove();
+            isOk = true;
         }
         else{
             //means that i cannot move the platform
@@ -95,7 +96,7 @@ class SafetyController{
         UltrasonicSensor ultrasonicSensor;
 
         /**
-         * Function that controls the LED on and off behaviour
+         * Function that controls the LED on and off behavior
          * INPUT: is the new value of the leds if the movement is accouring
          *          or is not safe to move
          * */
@@ -134,12 +135,14 @@ class SafetyController{
             
             boolean zOutOfRange = desired.getZ() > Z_MAXLENGHT || desired.getZ() < Z_MINLENGHT ;
             if(zOutOfRange){
+                Serial.println("Z out of reach");
                 return false;
             }
 
-            boolean inclineOutOfRange = desired.getInclination() > INCLINATION_MAX ||desired.getInclination() > INCLINATION_MIN ;
+            boolean inclineOutOfRange = desired.getInclination() > INCLINATION_MAX ||desired.getInclination() < INCLINATION_MIN ;
             if (inclineOutOfRange)
             {
+                Serial.println("Inclination out of reach");
                 return false;
             }
 
@@ -148,6 +151,7 @@ class SafetyController{
             boolean onlyZ = desired.getRotation()> ROT_MIN || desired.getInclination() > INCLINATION_MIN;
             if (desired.getZ() > Z_NO_INCLINATION && onlyZ ) //means that i cannot incline and i want to
             {
+                Serial.println("No inclination/rotation at this Z");
                 return false;
             }
 

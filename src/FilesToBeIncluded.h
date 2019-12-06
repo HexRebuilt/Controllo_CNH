@@ -4,8 +4,9 @@
  * the order is important because it allows to reduce the ammount of "include" in
  * each class in order to save memory space.
  * */
-#include "Arduino.h"
+//#include "Arduino.h"
 #include "Defines.h"
+
 #include "Positions.h"
 
 //those files requires position.h

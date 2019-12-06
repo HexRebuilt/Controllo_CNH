@@ -51,6 +51,7 @@ class PositionControl {
       //i need to ADD THE SAFETY FEATURE
       //--------------------------------
       if(safety.isSafe(desired)){
+        Serial.println("Safe to move");
 
         int axis = 3;
         //checking if i need to move along each axis 

@@ -7,7 +7,6 @@
 // AUTHOR       : Simone Andreini
 //------------------------------------------------------------------------------
 
-#include <Arduino.h>
 #include <string.h>
 #include <SPI.h>
 
@@ -80,7 +79,7 @@ void setup() {
 
 void timePassed(){
   elapsedTime =   millis() - startTime;
-
+  Serial.print("Execution time: ");
   Serial.print( (long )(elapsedTime / 1000L));         // divide by 1000 to convert to seconds - then cast to an int to print
   Serial.print(".");                             // print decimal point
       
@@ -110,6 +109,6 @@ void loop() {
   messageOut = pControl.toStringCurrentPosition();
   comunication.write(messageOut);
 
-  timePassed();
+  //timePassed();
 }
 
