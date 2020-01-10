@@ -9,7 +9,7 @@
 // # Pin RX (URM07 V1.0) -> TX1/D1 (Arduino Leonardo)
 // # Pin TX (URM07 V1.0) -> RX1/D0 (Arduino Leonardo)
 
-#include "Arduino.h"
+//#include "Arduino.h"
 
 class UltrasonicSensor{
 
@@ -77,8 +77,8 @@ class UltrasonicSensor{
             uint8_t check = 0;
             for (int k = 1; k < 6; k++)
             {
-                Serial.print("Debug checksum: Rx= ");
-                Serial.println(Rx_DATA[k]);
+                //Serial.print("Debug checksum: Rx= ");
+                //Serial.println(Rx_DATA[k]);
                 check = check + Rx_DATA[k];
             }
             if (check == Rx_DATA[6])
