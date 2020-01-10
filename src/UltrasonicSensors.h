@@ -61,8 +61,9 @@ class UltrasonicSensor{
                 //Serial.println(i);
             }            
             if(isCheckSumOk()){
-                analyzeDistance(distance);
                 printDistance(distance);
+                analyzeDistance(distance);
+                
             }
         }
 
@@ -77,8 +78,8 @@ class UltrasonicSensor{
             uint8_t check = 0;
             for (int k = 1; k < 6; k++)
             {
-                Serial.print("Debug checksum: Rx= ");
-                Serial.println(Rx_DATA[k]);
+                //Serial.print("Debug checksum: Rx= ");
+                //Serial.println(Rx_DATA[k]);
                 check = check + Rx_DATA[k];
             }
             if (check == Rx_DATA[6])
