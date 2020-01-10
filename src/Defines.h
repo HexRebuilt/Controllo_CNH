@@ -13,9 +13,6 @@
 #define TIMER_PRESCALER_DIV 1024
 #define INT_FREQUENCY 10
 
-/* Serial rates for UART */
-#define BAUDRATE        115200
-
 //comunication
 #define CHARACTER_SPLITTER '-'
 

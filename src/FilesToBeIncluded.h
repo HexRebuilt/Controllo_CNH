@@ -7,9 +7,6 @@
 //#include "Arduino.h"
 #include "Defines.h"
 
-#include "encoder-defines.h"
-#include "Encoder.h"
-
 #include "Positions.h"
 
 //those files requires position.h

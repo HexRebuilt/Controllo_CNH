@@ -48,25 +48,14 @@ void Hardware_Initialization(){
   pinMode(ROTATION_MOTOR_PIN,OUTPUT);
   pinMode(LED_PIN,OUTPUT);
 
-  //Set the modes for the SPI IO
-  pinMode(SPI_SCLK, OUTPUT);
-  pinMode(SPI_MOSI, OUTPUT);
-  pinMode(SPI_MISO, INPUT);
-  pinMode(ENC_PIN, OUTPUT);
-    
-  //Initialize the UART serial connection for debugging
-  Serial.begin(BAUDRATE);
-
-  //Get the CS line high which is the default inactive state
-  digitalWrite(ENC_PIN, HIGH);
-  digitalWrite(Z_MOTOR_PIN,HIGH);
-  digitalWrite(ROTATION_PIN,HIGH);
-
   // SPI initialization
-  SPI.setClockDivider(SPI_CLOCK_DIV64);   // 750 kHz with 48Mhz of the adafruit m0 cpu speed 
-  //start SPI bus
   SPI.begin();
   SPISettings(20000000, MSBFIRST, SPI_MODE3);
+
+  // initializza serial port
+  Serial.begin(19200);
+  //Serial.begin(9600);
+  
 
 }
 
