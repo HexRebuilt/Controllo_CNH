@@ -49,8 +49,8 @@ class SafetyController{
         
         //then it checks if the area around is safe
         if(isOk){
-            isOk = isSafeToMove();
-            //isOk = true;
+           //isOk = isSafeToMove();
+            isOk = true;
         }
         else{
             //means that i cannot move the platform
