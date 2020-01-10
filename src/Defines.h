@@ -15,6 +15,7 @@
 
 /* Serial rates for UART */
 #define BAUDRATE        115200
+#define ULTRASONICBAUDRATE        19200
 
 //comunication
 #define CHARACTER_SPLITTER '-'

@@ -55,7 +55,7 @@ void Hardware_Initialization(){
   pinMode(ENC_PIN, OUTPUT);
     
   //Initialize the UART serial connection for debugging
-  Serial.begin(BAUDRATE);
+  Serial.begin(ULTRASONICBAUDRATE);
 
   //Get the CS line high which is the default inactive state
   digitalWrite(ENC_PIN, HIGH);
@@ -120,6 +120,6 @@ void loop() {
   messageOut = pControl.toStringCurrentPosition();
   comunication.write(messageOut);
 
-  //timePassed();
+  timePassed();
 }
 
