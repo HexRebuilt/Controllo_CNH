@@ -49,7 +49,7 @@ class SafetyController{
         
         //then it checks if the area around is safe
         if(isOk){
-            isOk = isSafeToMove();
+            //isOk = isSafeToMove();
             isOk = true;
         }
         else{

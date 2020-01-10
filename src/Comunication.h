@@ -30,7 +30,6 @@ class Comunication{
         //the serial port is more important then wifi so overwrites its comand
         if(Serial.available() && !instruction.compareTo("") ){
             instruction = serialPort.getDataIn();
-            //instruction.concat("-");//to solve a bug
         }
         if ((instruction.compareTo(""))){ //means that i have read something
             readed = decoder.inputAnalyze(instruction);
