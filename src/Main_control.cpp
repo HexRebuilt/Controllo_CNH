@@ -109,6 +109,6 @@ void loop() {
   messageOut = pControl.toStringCurrentPosition();
   comunication.write(messageOut);
 
-  //timePassed();
+  timePassed();
 }
 
