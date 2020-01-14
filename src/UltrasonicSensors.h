@@ -76,7 +76,7 @@ class UltrasonicSensor{
         boolean isCheckSumOk(){
             //this variable
             uint8_t check = 0;
-            for (int k = 1; k < 6; k++)
+            for (int k = 0; k < 6; k++)
             {
                 //Serial.print("Debug checksum: Rx= ");
                 //Serial.println(Rx_DATA[k]);
@@ -114,7 +114,7 @@ class UltrasonicSensor{
     public:
         void setup() {
             Serial1.begin(19200); //Serial1: Ultrasonice Sensors Serial Communication Port, baudrate: 19200
-            //Serial.begin(19200); //Serial: USB Serial Monitor
+            //Serial.begin(19200); //Serial: USB Serial Monitor already present in the main code
         }
 
         /**
