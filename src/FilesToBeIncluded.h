@@ -7,12 +7,15 @@
 //#include "Arduino.h"
 #include "Defines.h"
 
+#include "Timer.H"
+
 #include "Positions.h"
 
 //those files requires position.h
 #include "UltrasonicSensors.h"
 #include "Safety.h"
 #include "Motors.h"
+#include "Encoder.h"
 //position control uses the previous library so must be included afterwards
 #include "Position_control.h"
  

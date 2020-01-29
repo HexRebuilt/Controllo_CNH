@@ -27,7 +27,11 @@
  * */               
 #define Z_AXIS_PIN      A1  
 #define INCLINATION_PIN A2  
-#define ROTATION_PIN    A3  
+
+/**
+ * Sensor pins
+ * */
+#define ROTATION_PIN    6  
 
 /**
  * motor pins

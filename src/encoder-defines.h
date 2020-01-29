@@ -15,7 +15,7 @@
 #define RES14           14
 
 /* SPI pins */
-#define ENC_PIN         6
+#define ENC_PIN         ROTATION_PIN
 #define SPI_MOSI        23
 #define SPI_MISO        22
 #define SPI_SCLK        24

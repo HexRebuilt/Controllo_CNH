@@ -1,6 +1,5 @@
-//#include <Arduino.h>
 #include "encoder-defines.h"
-//#include "Defines.h"
+
 
 /**
  * NOTE: open this link before analizing the code. it's the base which is based on

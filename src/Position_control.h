@@ -15,6 +15,7 @@ class PositionControl {
     void startup(Position dataIn){
       safety.startup();
       setDesiredPosition(dataIn);
+      
     }
 
     String toStringCurrentPosition(){
@@ -95,6 +96,7 @@ class PositionControl {
     int readvalue= 0;
     Motors motors;
     SafetyController safety;
+    DigitalEncoder encoder;
 
     /**
      * one of the 3 sets of function that get a position from the analog sensors and gives back the readed value
@@ -116,7 +118,7 @@ class PositionControl {
     /**
      * one of the 3 sets of function that get a rotation from the analog sensors and gives back the readed value
      * */
-    int rot_reading(){
+    int ANALOG_rot_reading(){
       adc = analogRead(ROTATION_PIN);
 
       if(ROT_INVERSE_LOGIC){ //look in defines.h for explanation
@@ -127,6 +129,13 @@ class PositionControl {
       }
       current.setRotation(readvalue);
       return current.getRotation();  
+    }
+
+    /**
+     * Function that bases itself on the encoder class to read the absolute encoder
+     * */
+    int rot_reading(){
+      return encoder.getRotation();
     }
 
     /**
