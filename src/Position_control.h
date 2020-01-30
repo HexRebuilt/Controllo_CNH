@@ -135,7 +135,8 @@ class PositionControl {
      * Function that bases itself on the encoder class to read the absolute encoder
      * */
     int rot_reading(){
-      return encoder.getRotation();
+      //return encoder.getRotation();
+      return 0;
     }
 
     /**

@@ -50,8 +50,10 @@
 #define REALY_INTERVAL  1000 //ms
 //ultrasonic sensors constants
 #define NUMBER_OF_SENSORS 3
-#define MINIMUM_DISTANCE 100 //cm
+#define MINIMUM_DISTANCE 50 //cm
+#define MAX_DISTANCE 750  //cm
 #define ULTRASONIC_DELAY 150 //ms
+
 
 
 /**

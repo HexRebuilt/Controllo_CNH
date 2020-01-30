@@ -30,7 +30,7 @@ class SafetyController{
         switches.setRotation(180);
         switches.setInclination(0);
 
-        //ultrasonicSensor.setup();
+        ultrasonicSensor.setup();
     }
 
     /**
@@ -49,7 +49,7 @@ class SafetyController{
         
         //then it checks if the area around is safe
         if(isOk){
-            //isOk = isSafeToMove();
+            isOk = isSafeToMove();
             //isOk = true;
         }
         else{
