@@ -14,6 +14,8 @@
 //those files requires position.h
 #include "UltrasonicSensors.h"
 #include "Safety.h"
+#include "digital_potentiometer.h"
+#include "mecvel_motors.h"
 #include "Motors.h"
 #include "Encoder.h"
 //position control uses the previous library so must be included afterwards
