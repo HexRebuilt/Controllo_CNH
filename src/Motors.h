@@ -11,9 +11,6 @@
 
 
 class Motors{
-
-
-
     private:
         digitalPotentiometer rot_pot, z_pot, inlcine_pot;
         mecvel_motors inclination;
