@@ -53,7 +53,7 @@ class UltrasonicSensor{
 
   public:
     void setup() {
-      Serial1.begin(19200);  //Serial1: Ultrasonice Sensors Serial Communication Port, baudrate: 19200
+      Serial1.begin(256000);  //Serial1: Ultrasonice Sensors Serial Communication Port, baudrate: 19200
       Serial.begin(9600);   //Serial: USB Serial Monitor
     }
 
